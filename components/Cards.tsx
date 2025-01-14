@@ -1,7 +1,6 @@
 import { BlogCardType } from "@/app/(root)/page";
 import { cn, formatDate } from "@/lib/utils";
 import { EyeIcon } from "lucide-react";
-import Image from "next/image";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
@@ -40,8 +39,8 @@ export const BlogCard = ({ post }: { post: BlogCardType }) => {
         </div>
 
         <Link href={`/user/${author?._id}`}>
-          <Image
-            src={`${author?.image}`}
+          <img
+            src={author?.image}
             alt="avatar"
             width={48}
             height={48}
@@ -97,8 +96,8 @@ export const EditorPicksCard = ({ post }: { post: BlogCardType }) => {
         </div>
 
         <Link href={`/user/${author?._id}`}>
-          <Image
-            src={`${author?.image}`}
+          <img
+            src={author?.image}
             alt="avatar"
             width={32}
             height={32}

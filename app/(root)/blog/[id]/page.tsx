@@ -19,6 +19,48 @@ const md = markdownIt();
 
 export const experimental_ppr = true;
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+
+  const post = await client.fetch(BLOG_BY_ID_QUERY, { id });
+
+  if (!post) {
+    return {
+      title: "Post Not Found",
+      description: "The blog post you are looking for does not exist.",
+    };
+  }
+
+  return {
+    title: post.title,
+    description: post.description || "Read the latest blog post on Blogify.",
+    keywords: post.category || "blog",
+    openGraph: {
+      title: post.title,
+      description: post.description || "Read the latest blog post on Blogify.",
+      url: `https://blogapp-09.vercel.app/blog/${id}`,
+      images: [
+        {
+          url: post.image || "https://blogapp-09.vercel.app/logo.png",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description || "Read the latest blog post on Blogify.",
+      images: [post.image || "https://blogapp-09.vercel.app/logo.png"],
+    },
+  };
+}
+
 const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params;
 
@@ -54,7 +96,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               href={`/user/${post?.author?._id}`}
               className="flex gap-2 items-center mb-3"
             >
-              <Image
+              <img
                 src={post?.author?.image}
                 height={64}
                 width={64}

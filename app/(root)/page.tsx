@@ -14,20 +14,22 @@ export async function generateMetadata({
   const query = (await searchParams).query;
 
   return {
-    title: "Blogify",
+    title: query
+      ? `Search-${query.charAt(0).toUpperCase() + query.slice(1).toLowerCase()} | Blogify`
+      : "Home | Blogify",
     description: query
-      ? `Discover blogs matching "${query}" on My Blog. Share your thoughts and experiences with our global audience.`
-      : "Explore a variety of blogs on My Blog. Share your experiences and engage with a global audience.",
+      ? `Discover blogs matching "${query}" on Blogify. Share your thoughts and experiences with our global audience.`
+      : "Explore a variety of blogs on Blogify. Share your experiences and engage with a global audience.",
     openGraph: {
-      title: "Blogify",
+      title: query ? `Blogify | ${query}` : "Blogify",
       description: query
-        ? `Discover blogs matching "${query}" on My Blog. Share your thoughts and experiences with our global audience.`
-        : "Explore a variety of blogs on My Blog. Share your experiences and engage with a global audience.",
+        ? `Discover blogs matching "${query}" on Blogify. Share your thoughts and experiences with our global audience.`
+        : "Explore a variety of blogs on Blogify. Share your experiences and engage with a global audience.",
       type: "website",
       url: "https://blogapp-09.vercel.app",
       images: [
         {
-          url: "/favicon.ico",
+          url: "https://blogapp-09.vercel.app/logo.png",
           width: 1200,
           height: 630,
           alt: "Blogify",
@@ -36,11 +38,11 @@ export async function generateMetadata({
     },
     twitter: {
       card: "summary_large_image",
-      title: "Blogify",
+      title: query ? `Blogify | ${query}` : "Blogify",
       description: query
-        ? `Discover blogs matching "${query}" on My Blog. Share your thoughts and experiences with our global audience.`
-        : "Explore a variety of blogs on My Blog. Share your experiences and engage with a global audience.",
-      images: ["/favicon.ico"],
+        ? `Discover blogs matching "${query}" on Blogify. Share your thoughts and experiences with our global audience.`
+        : "Explore a variety of blogs on Blogify. Share your experiences and engage with a global audience.",
+      images: ["https://blogapp-09.vercel.app/logo.png"],
     },
   };
 }
