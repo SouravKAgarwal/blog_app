@@ -9,7 +9,7 @@ const SearchForm = ({ query }: { query?: string }) => {
         name="query"
         defaultValue={query}
         className="search-input"
-        placeholder="search startups"
+        placeholder="search blogs"
       />
 
       <div className="flex gap-2">

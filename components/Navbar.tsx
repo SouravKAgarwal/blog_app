@@ -18,7 +18,7 @@ const Navbar = async () => {
         <div className="flex items-center gap-5 text-black font-[500]">
           {session && session?.user ? (
             <>
-              <Link href="/startup/create">
+              <Link href="/blog/create">
                 <span className="max-sm:hidden">Create</span>
                 <BadgePlus className="sm:hidden size-6" />
               </Link>

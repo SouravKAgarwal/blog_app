@@ -3,7 +3,6 @@
 import { useActionState, useState } from "react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
-import MDEditor from "@uiw/react-md-editor";
 import { Button } from "./ui/button";
 import { Send } from "lucide-react";
 import { formSchema } from "@/lib/validations";
@@ -11,11 +10,13 @@ import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { createPitch } from "@/lib/actions";
+import Editor from "./Editor";
 
-const StartupForm = () => {
+const BlogForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [pitch, setPitch] = useState("");
+  const [language] = useState("en-US");
 
   const { toast } = useToast();
   const router = useRouter();
@@ -36,9 +37,9 @@ const StartupForm = () => {
       if (result.status === "SUCCESS") {
         toast({
           title: "Success",
-          description: "You have submitted your startup pitch",
+          description: "You have submitted your blog",
         });
-        router.push(`/startup/${result._id}`);
+        router.push(`/blog/${result._id}`);
       }
 
       return result;
@@ -87,7 +88,7 @@ const StartupForm = () => {
           id="title"
           name="title"
           className="startup-form_input"
-          placeholder="Startup Title"
+          placeholder="Blog Title"
         />
         {errors.title && <p className="startup-form_error">{errors.title}</p>}
       </div>
@@ -100,7 +101,7 @@ const StartupForm = () => {
           id="description"
           name="description"
           className="startup-form_textarea"
-          placeholder="Startup Description"
+          placeholder="Blog Description"
         />
         {errors.description && (
           <p className="startup-form_error">{errors.description}</p>
@@ -115,7 +116,7 @@ const StartupForm = () => {
           id="category"
           name="category"
           className="startup-form_input"
-          placeholder="Startup Category (Health, Travel, ...)"
+          placeholder="Blog Category (Health, Travel, ...)"
         />
         {errors.category && (
           <p className="startup-form_error">{errors.category}</p>
@@ -131,7 +132,7 @@ const StartupForm = () => {
           name="link"
           type="text"
           className="startup-form_input"
-          placeholder="Startup Image URL"
+          placeholder="Blog Image URL"
         />
         {errors.link && <p className="startup-form_error">{errors.link}</p>}
       </div>
@@ -140,21 +141,9 @@ const StartupForm = () => {
         <label htmlFor="Pitch" className="startup-form_label">
           Pitch
         </label>
-        <MDEditor
-          value={pitch}
-          onChange={(value) => setPitch(value as string)}
-          id="pitch"
-          preview="edit"
-          height={300}
-          style={{ borderRadius: 20, overflow: "hidden" }}
-          textareaProps={{
-            placeholder:
-              "Briefly describe your startup idea and what problem it solves",
-          }}
-          previewOptions={{
-            disallowedElements: ["style"],
-          }}
-        />
+
+        <Editor text={pitch} setText={(value: string) => setPitch(value)} />
+
         {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
       </div>
 
@@ -163,11 +152,11 @@ const StartupForm = () => {
         className="startup-form_btn text-white"
         disabled={isPending}
       >
-        {isPending ? "Submitting..." : "Submit your pitch"}
+        {isPending ? "Submitting..." : "Submit your blog"}
         <Send className="ml-2 size-6" />
       </Button>
     </form>
   );
 };
 
-export default StartupForm;
+export default BlogForm;

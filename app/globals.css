@@ -39,12 +39,36 @@
     @apply font-medium text-[20px] text-black;
   }
 
+  .text-20-semibold {
+    @apply font-semibold text-[20px] text-black;
+  }
+
+  .text-18-semibold {
+    @apply font-semibold text-[18px] text-black;
+  }
+
+  .text-16-semibold {
+    @apply font-semibold text-[16px] text-black;
+  }
+
   .text-16-medium {
     @apply font-medium text-[16px] text-black;
   }
 
   .text-14-normal {
-    @apply font-normal text-sm text-white-100/80;
+    @apply font-normal text-[14px] text-white/80;
+  }
+
+  .text-14-semibold {
+    @apply font-semibold text-[14px] text-black;
+  }
+
+  .text-14-medium {
+    @apply font-medium text-[14px] text-black;
+  }
+
+  .text-12-normal {
+    @apply font-normal text-[12px] text-black-300;
   }
 
   .pink_container {
@@ -68,7 +92,7 @@
   }
 
   .card_grid {
-    @apply grid md:grid-cols-3 sm:grid-cols-2 gap-5;
+    @apply grid lg:grid-cols-3 max-lg:grid-cols-2 max-xs:grid-cols-1 gap-5;
   }
 
   .card_grid-sm {
@@ -152,6 +176,26 @@
     @apply rounded-full bg-black-200 font-medium text-[16px] text-white px-5 py-3 !important;
   }
 
+  .blog-card {
+    @apply bg-white border-[5px] border-black p-3 rounded-[22px] shadow-200 hover:border-primary transition-all duration-500 hover:shadow-300 hover:bg-primary-100;
+  }
+
+  .blog-card_date {
+    @apply font-medium text-[14px] bg-primary-100 px-2 py-1 rounded-full group-hover:bg-white-100;
+  }
+
+  .blog-card_desc {
+    @apply font-normal text-[13px] line-clamp-2 my-3 text-black-100 break-all;
+  }
+
+  .blog-card_img {
+    @apply w-full h-[120px] rounded-[10px] object-cover;
+  }
+
+  .blog-card_btn {
+    @apply rounded-full bg-black-200 font-medium text-[12px] text-white px-2.5 py-1.5 !important;
+  }
+
   .startup-card_skeleton {
     @apply w-full h-96 rounded-[22px] bg-zinc-400;
   }
@@ -216,6 +260,39 @@
   }
 }
 
-.w-md-editor-toolbar {
+.md-editor {
+  @apply mt-3 rounded-[22px] border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300 !important;
+}
+
+svg.md-editor-icon {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.md-editor-footer {
+  display: none !important;
+}
+
+.md-editor-toolbar {
+  flex-wrap: wrap !important;
   padding: 10px !important;
+}
+
+.md-editor-toolbar-left {
+  flex-wrap: wrap !important;
+}
+
+div[title="catalog"],
+div[title="source code"] {
+  display: none !important;
+}
+
+.prose > p > img {
+  display: block;
+  margin: 0 auto;
+  border-radius: 10px;
+}
+
+.prose > p:has(> img) {
+  text-align: center;
 }
