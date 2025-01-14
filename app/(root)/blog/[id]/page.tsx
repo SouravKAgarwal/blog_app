@@ -5,7 +5,6 @@ import {
   BLOG_BY_ID_QUERY,
   POPULAR_BLOG_BY_VIEW_QUERY,
 } from "@/sanity/lib/queries";
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import markdownIt from "markdown-it";

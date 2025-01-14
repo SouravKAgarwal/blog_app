@@ -16,7 +16,6 @@ const BlogForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [pitch, setPitch] = useState("");
-  const [language] = useState("en-US");
 
   const { toast } = useToast();
   const router = useRouter();
@@ -143,7 +142,6 @@ const BlogForm = () => {
         </label>
 
         <Editor text={pitch} setText={(value: string) => setPitch(value)} />
-
         {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
       </div>
 
