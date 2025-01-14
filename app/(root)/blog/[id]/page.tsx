@@ -13,6 +13,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
 import { BlogCardType } from "../../page";
 import { EditorPicksCard, MostPopular } from "@/components/Cards";
+import Image from "next/image";
 
 const md = markdownIt();
 
@@ -95,7 +96,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               href={`/user/${post?.author?._id}`}
               className="flex gap-2 items-center mb-3"
             >
-              <img
+              <Image
                 src={post?.author?.image}
                 height={64}
                 width={64}

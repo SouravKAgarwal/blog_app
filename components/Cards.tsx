@@ -4,6 +4,7 @@ import { EyeIcon } from "lucide-react";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
+import Image from "next/image";
 
 export const BlogCard = ({ post }: { post: BlogCardType }) => {
   const {
@@ -39,8 +40,8 @@ export const BlogCard = ({ post }: { post: BlogCardType }) => {
         </div>
 
         <Link href={`/user/${author?._id}`}>
-          <img
-            src={author?.image}
+          <Image
+            src={`${author?.image}`}
             alt="avatar"
             width={48}
             height={48}
@@ -96,8 +97,8 @@ export const EditorPicksCard = ({ post }: { post: BlogCardType }) => {
         </div>
 
         <Link href={`/user/${author?._id}`}>
-          <img
-            src={author?.image}
+          <Image
+            src={`${author?.image}`}
             alt="avatar"
             width={32}
             height={32}
