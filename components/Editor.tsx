@@ -45,6 +45,7 @@ config({
         },
         imgTitleItem: {
           link: "Add Img Link",
+          
         },
         linkModalTips: {
           linkTitle: "Add Link",

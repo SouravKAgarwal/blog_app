@@ -52,7 +52,13 @@ export const BlogCard = ({ post }: { post: BlogCardType }) => {
 
       <Link href={`/blog/${_id}`}>
         <p className="startup-card_desc">{description}</p>
-        <img src={image} alt={title} className="startup-card_img" />
+        <Image
+          src={`${image}`}
+          alt={`${title}`}
+          width={144}
+          height={144}
+          className="startup-card_img"
+        />
       </Link>
 
       <div className="flex-between gap-3 mt-5">
@@ -109,7 +115,7 @@ export const EditorPicksCard = ({ post }: { post: BlogCardType }) => {
 
       <Link href={`/blog/${_id}`}>
         <p className="blog-card_desc">{description}</p>
-        <img src={image} alt={title} className="blog-card_img" />
+        <img src={`${image}`} alt={`${title}`} className="blog-card_img" />
       </Link>
 
       <div className="flex-between gap-3 mt-5">
@@ -131,8 +137,8 @@ export const MostPopular = ({ post }: { post: BlogCardType }) => {
     <li className="blog-card group">
       <Link href={`/blog/${_id}`} className="flex-between gap-3">
         <img
-          src={image}
-          alt={title}
+          src={`${image}`}
+          alt={`${title}`}
           className="rounded-lg w-[80px] h-[60px] object-cover"
         />
         <div>
