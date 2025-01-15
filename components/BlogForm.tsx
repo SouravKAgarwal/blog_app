@@ -1,24 +1,50 @@
 "use client";
 
-import { useActionState, useState } from "react";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Send } from "lucide-react";
+import { Delete, DeleteIcon, Send, Trash } from "lucide-react";
 import { formSchema } from "@/lib/validations";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
 import { useRouter } from "next/navigation";
 import { createPitch } from "@/lib/actions";
 import Editor from "./Editor";
+import { ChangeEvent, useActionState, useState } from "react";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
+import Image from "next/image";
 
 const BlogForm = () => {
   const [errors, setErrors] = useState<Record<string, string>>({});
-
   const [pitch, setPitch] = useState("");
-
+  const [imageURL, setImageURL] = useState("");
   const { toast } = useToast();
   const router = useRouter();
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleImageUpload = async (event: ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    try {
+      const url = await uploadImageToCloudinary(file);
+      setImageURL(url);
+    } catch (error) {
+      console.error("Image upload failed", error);
+      toast({
+        title: "Error",
+        description: "Image upload failed",
+        variant: "destructive",
+      });
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  const handleImageDelete = () => {
+    setImageURL("");
+  };
 
   const handleFormSubmit = async (prevState: any, formData: FormData) => {
     try {
@@ -26,7 +52,7 @@ const BlogForm = () => {
         title: formData.get("title") as string,
         description: formData.get("description") as string,
         category: formData.get("category") as string,
-        link: formData.get("link") as string,
+        link: imageURL,
         pitch: pitch,
       };
 
@@ -122,17 +148,45 @@ const BlogForm = () => {
         )}
       </div>
 
-      <div>
+      <div className="flex flex-col gap-4">
         <label htmlFor="link" className="startup-form_label">
-          Image URL
+          Upload Image
         </label>
-        <Input
-          id="link"
-          name="link"
-          type="text"
-          className="startup-form_input"
-          placeholder="Blog Image URL"
-        />
+        {!imageURL ? (
+          <input
+            id="link"
+            name="link"
+            type="file"
+            onChange={handleImageUpload}
+            accept="image/*"
+            className="file:mr-4 file:p-4 file:border-0 file:text-lg file:font-semibold file:bg-primary file:text-black border-[3px] border-black rounded-full"
+          />
+        ) : (
+          <div className="relative">
+            <Input
+              id="link"
+              name="link"
+              type="text"
+              defaultValue={imageURL}
+              className="startup-form_input"
+              placeholder="Blog Image URL"
+            />
+            <Image
+              src={imageURL}
+              alt="post_image"
+              width={1440}
+              height={1440}
+              className="rounded-lg w-full h-auto border mt-4 border-black-300 object-cover"
+            />
+            <button
+              type="button"
+              onClick={handleImageDelete}
+              className="absolute bottom-4 right-2 bg-primary text-white p-1 rounded-full hover:bg-red-600"
+            >
+              <Trash size={20} />
+            </button>
+          </div>
+        )}
         {errors.link && <p className="startup-form_error">{errors.link}</p>}
       </div>
 

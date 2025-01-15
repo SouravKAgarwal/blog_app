@@ -7,15 +7,20 @@ import {
 } from "@/sanity/lib/queries";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import markdownIt from "markdown-it";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
 import { BlogCardType } from "../../page";
 import { EditorPicksCard, MostPopular } from "@/components/Cards";
 import Image from "next/image";
-
-const md = markdownIt();
+import rehypeDocument from "rehype-document";
+import rehypeFormat from "rehype-format";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypePrettyCode from "rehype-pretty-code";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
+import { unified } from "unified";
 
 export const experimental_ppr = true;
 
@@ -74,7 +79,23 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   if (!post) return notFound();
 
-  const parsedContent = md.render(post?.pitch || "");
+  const processor = unified()
+    .use(remarkParse)
+    .use(remarkRehype)
+    .use(rehypeDocument, { title: "👋🌍" })
+    .use(rehypeFormat)
+    .use(rehypeStringify)
+    .use(rehypePrettyCode, {
+      theme: "github-dark",
+      transformers: [
+        transformerCopyButton({
+          visibility: "always",
+          feedbackDuration: 3_000,
+        }),
+      ],
+    });
+
+  const parsedContent = (await processor.process(post?.pitch)).toString();
 
   return (
     <>
