@@ -12,37 +12,61 @@ export async function generateMetadata({
   searchParams: Promise<{ query: string }>;
 }) {
   const query = (await searchParams).query;
+  const params = { search: query || null };
+
+  const { data: posts } = await sanityFetch({ query: BLOG_QUERY, params });
+
+  const fallbackImage = "https://blogapp-09.vercel.app/logo.png";
+
+  const postImages = posts
+    ?.filter((post: BlogCardType) => post.image)
+    .map((post: BlogCardType) => ({
+      url: post.image,
+      width: 1200,
+      height: 630,
+      alt: post.title || "Blogify Post",
+    }));
+
+  function shuffleArray(array: any[]) {
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  const randomImages =
+    postImages?.length > 0 ? shuffleArray(postImages).slice(0, 5) : [];
 
   return {
-    title: query
-      ? `Search-${query.charAt(0).toUpperCase() + query.slice(1).toLowerCase()} | Blogify`
-      : "Home | Blogify",
+    title: query ? `Search results for "${query}" | Blogify` : "Home | Blogify",
     description: query
       ? `Discover blogs matching "${query}" on Blogify. Share your thoughts and experiences with our global audience.`
       : "Explore a variety of blogs on Blogify. Share your experiences and engage with a global audience.",
     openGraph: {
-      title: query ? `Blogify | ${query}` : "Blogify",
+      title: query
+        ? `Search results for "${query}" | Blogify`
+        : "Home | Blogify",
       description: query
         ? `Discover blogs matching "${query}" on Blogify. Share your thoughts and experiences with our global audience.`
         : "Explore a variety of blogs on Blogify. Share your experiences and engage with a global audience.",
       type: "website",
       url: "https://blogapp-09.vercel.app",
-      images: [
-        {
-          url: "https://blogapp-09.vercel.app/logo.png",
-          width: 1200,
-          height: 630,
-          alt: "Blogify",
-        },
-      ],
+      images:
+        randomImages?.length > 0
+          ? randomImages
+          : [{ url: fallbackImage, width: 1200, height: 630, alt: "Blogify" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: query ? `Blogify | ${query}` : "Blogify",
+      title: query
+        ? `Search results for "${query}" | Blogify`
+        : "Home | Blogify",
       description: query
         ? `Discover blogs matching "${query}" on Blogify. Share your thoughts and experiences with our global audience.`
         : "Explore a variety of blogs on Blogify. Share your experiences and engage with a global audience.",
-      images: ["https://blogapp-09.vercel.app/logo.png"],
+      images:
+        randomImages?.length > 0 ? [randomImages[0].url] : [fallbackImage],
     },
   };
 }

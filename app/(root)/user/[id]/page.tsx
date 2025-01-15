@@ -9,6 +9,46 @@ import { Suspense } from "react";
 
 export const experimental_ppr = true;
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = (await params).id;
+
+  const user = await client.fetch(AUTHOR_BY_ID_QUERY, { id });
+
+  const title = `${user.name} | Blogify`;
+  const description =
+    user.bio ||
+    `Explore blogs by ${user.name} on Blogify. Share your thoughts with the world!`;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      type: "profile",
+      url: `https://blogapp-09.vercel.app/user/${id}`,
+      images: [
+        {
+          url: user.image || "https://blogapp-09.vercel.app/logo.png",
+          width: 400,
+          height: 400,
+          alt: user.name,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [user.image || "https://blogapp-09.vercel.app/logo.png"],
+    },
+  };
+}
+
 const UserPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
   const session = await auth();
