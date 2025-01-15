@@ -296,3 +296,17 @@ div[title="source code"] {
 .prose > p:has(> img) {
   text-align: center;
 }
+
+.prose
+  :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)):before,
+.prose
+  :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)):after {
+  content: "" !important;
+}
+
+.prose p > code,
+.prose li > code {
+  background-color: #d6d5d5 !important;
+  padding: 3px !important;
+  border-radius: 2px !important;
+}

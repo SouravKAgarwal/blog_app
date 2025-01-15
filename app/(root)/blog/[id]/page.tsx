@@ -116,7 +116,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           {parsedContent ? (
             <article
-              className="prose max-w-4xl font-work-sans"
+              className="prose prose-a:text-blue-600 max-w-4xl font-work-sans"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (
