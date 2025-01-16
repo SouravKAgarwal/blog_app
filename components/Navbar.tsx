@@ -23,6 +23,7 @@ const Navbar = async () => {
                 <BadgePlus className="sm:hidden size-6" />
               </Link>
               <form
+                className="mt-1 sm:mt-0"
                 action={async () => {
                   "use server";
 

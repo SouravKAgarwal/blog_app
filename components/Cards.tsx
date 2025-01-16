@@ -86,7 +86,7 @@ export const EditorPicksCard = ({ post }: { post: BlogCardType }) => {
   } = post;
 
   return (
-    <li className="blog-card group">
+    <div className="blog-card group">
       <div className="flex-between">
         <p className="blog-card_date">{formatDate(_createdAt)}</p>
 
@@ -126,7 +126,7 @@ export const EditorPicksCard = ({ post }: { post: BlogCardType }) => {
           <Link href={`/blog/${_id}`}>Details</Link>
         </Button>
       </div>
-    </li>
+    </div>
   );
 };
 
@@ -134,7 +134,7 @@ export const MostPopular = ({ post }: { post: BlogCardType }) => {
   const { description, image, _id, title } = post;
 
   return (
-    <li className="blog-card group">
+    <li className="border-b border-black-300/40 pb-2 group">
       <Link href={`/blog/${_id}`} className="flex-between gap-3">
         <img
           src={`${image}`}
@@ -143,7 +143,7 @@ export const MostPopular = ({ post }: { post: BlogCardType }) => {
         />
         <div>
           <p className="text-16-semibold line-clamp-1">{title}</p>
-          <p className="blog-card_desc !my-1">{description}</p>
+          <p className="blog-card_desc !my-0">{description}</p>
         </div>
       </Link>
     </li>

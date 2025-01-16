@@ -21,6 +21,7 @@ import remarkRehype from "remark-rehype";
 import rehypePrettyCode from "rehype-pretty-code";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import { unified } from "unified";
+import Related from "@/components/Related";
 
 export const experimental_ppr = true;
 
@@ -111,7 +112,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           alt={post?.title}
           className="w-full md:w-2/3 rounded-xl h-auto mx-auto"
         />
-        <div className="space-y-5 mt-10 max-w-4xl mx-auto">
+        <div className="space-y-5 mt-10 max-w-3xl mx-auto">
           <div className="flex-between gap-5">
             <Link
               href={`/user/${post?.author?._id}`}
@@ -137,7 +138,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           {parsedContent ? (
             <article
-              className="prose prose-a:text-blue-600 max-w-4xl font-work-sans"
+              className="prose prose-a:text-blue-600 max-w-4xl prose-pre:max-h-[300px] font-work-sans"
               dangerouslySetInnerHTML={{ __html: parsedContent }}
             />
           ) : (
@@ -161,12 +162,8 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           {editorPosts?.length > 0 && (
             <div className="w-full md:w-[75%]">
-              <p className="text-26-semibold mb-5">Editor Picks</p>
-              <ul className="card_grid">
-                {editorPosts.map((post: BlogCardType) => (
-                  <EditorPicksCard key={post?._id} post={post} />
-                ))}
-              </ul>
+              <p className="text-26-semibold mb-5">Similar blogs</p>
+              <Related editorPosts={editorPosts} />
             </div>
           )}
         </div>
