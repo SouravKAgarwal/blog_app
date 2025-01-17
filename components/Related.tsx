@@ -27,6 +27,7 @@ const Related = ({ editorPosts }: any) => {
         responsive={responsive}
         containerClass="-mx-[10px]"
         itemClass="px-[10px]"
+        infinite={true}
       >
         {editorPosts?.map((post: BlogCardType) => (
           <EditorPicksCard key={post?._id} post={post} />
