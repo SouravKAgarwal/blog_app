@@ -4,14 +4,15 @@ import {
   PLAYLIST_BY_SLUG_QUERY,
   BLOG_BY_ID_QUERY,
   POPULAR_BLOG_BY_VIEW_QUERY,
+  BLOGS,
 } from "@/sanity/lib/queries";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { Suspense } from "react";
+import { cache, Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
 import { BlogCardType } from "../../page";
-import { EditorPicksCard, MostPopular } from "@/components/Cards";
+import { MostPopular } from "@/components/Cards";
 import Image from "next/image";
 import rehypeDocument from "rehype-document";
 import rehypeFormat from "rehype-format";
@@ -25,61 +26,19 @@ import Related from "@/components/Related";
 
 export const experimental_ppr = true;
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+const fetchPostById = cache(async (id: string) => {
+  return client.fetch(BLOG_BY_ID_QUERY, { id });
+});
 
-  const post = await client.fetch(BLOG_BY_ID_QUERY, { id });
+const fetchPopularBlogs = cache(async () => {
+  return client.fetch(POPULAR_BLOG_BY_VIEW_QUERY);
+});
 
-  if (!post) {
-    return {
-      title: "Post Not Found",
-      description: "The blog post you are looking for does not exist.",
-    };
-  }
+const fetchEditorPicks = cache(async () => {
+  return client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" });
+});
 
-  return {
-    title: post.title,
-    description: post.description || "Read the latest blog post on Blogify.",
-    keywords: post.category || "blog",
-    openGraph: {
-      title: post.title,
-      description: post.description || "Read the latest blog post on Blogify.",
-      url: `https://blogapp-09.vercel.app/blog/${id}`,
-      images: [
-        {
-          url: post.image || "https://blogapp-09.vercel.app/logo.png",
-          width: 1200,
-          height: 630,
-          alt: post.title,
-        },
-      ],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.description || "Read the latest blog post on Blogify.",
-      images: [post.image || "https://blogapp-09.vercel.app/logo.png"],
-    },
-  };
-}
-
-const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const { id } = await params;
-
-  const [post, popular, { select: editorPosts }] = await Promise.all([
-    client.fetch(BLOG_BY_ID_QUERY, { id }),
-    client.fetch(POPULAR_BLOG_BY_VIEW_QUERY),
-    client.fetch(PLAYLIST_BY_SLUG_QUERY, {
-      slug: "editor-picks",
-    }),
-  ]);
-
-  if (!post) return notFound();
-
+const parseContent = async (content: string) => {
   const processor = unified()
     .use(remarkParse)
     .use(remarkRehype)
@@ -91,49 +50,101 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       transformers: [
         transformerCopyButton({
           visibility: "always",
-          feedbackDuration: 3_000,
+          feedbackDuration: 3000,
         }),
       ],
     });
 
-  const parsedContent = (await processor.process(post?.pitch)).toString();
+  return content ? (await processor.process(content)).toString() : "";
+};
+
+export async function generateStaticProps() {
+  const posts = await client.fetch(BLOGS);
+  return posts.map(({ _id }: BlogCardType) => _id);
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const id = (await params).id;
+  const post = await fetchPostById(id);
+
+  return {
+    title: post.title,
+    description: post.description,
+    keywords: post.category,
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `https://blogapp-09.vercel.app/blog/${id}`,
+      images: [
+        {
+          url: post.image,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.description,
+      images: [post.image],
+    },
+  };
+}
+
+const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const id = (await params).id;
+
+  const [post, popularBlogs, { select: editorPicks }] = await Promise.all([
+    fetchPostById(id),
+    fetchPopularBlogs(),
+    fetchEditorPicks(),
+  ]);
+
+  if (!post) return notFound();
+
+  const parsedContent = await parseContent(post.pitch || "");
 
   return (
     <>
       <section className="pink_container !min-h-[230px]">
-        <p className="subtitle">{formatDate(post?._createdAt)}</p>
-        <h1 className="heading">{post?.title}</h1>
-        <p className="sub-heading !max-w-5xl">{post?.description}</p>
+        <p className="subtitle">{formatDate(post._createdAt)}</p>
+        <h1 className="heading">{post.title}</h1>
+        <p className="sub-heading !max-w-5xl">{post.description}</p>
       </section>
 
       <section className="section_container">
         <img
-          src={post?.image}
-          alt={post?.title}
+          src={post.image}
+          alt={post.title}
           className="w-full md:w-2/3 rounded-xl h-auto mx-auto"
         />
         <div className="space-y-5 mt-10 max-w-3xl mx-auto">
           <div className="flex-between gap-5">
             <Link
-              href={`/user/${post?.author?._id}`}
+              href={`/user/${post.author?._id}`}
               className="flex gap-2 items-center mb-3"
             >
               <Image
-                src={post?.author?.image}
+                src={post.author?.image}
                 height={64}
                 width={64}
                 className="rounded-full drop-shadow-lg"
                 alt="avatar"
               />
               <div>
-                <p className="text-20-medium">{post?.author?.name}</p>
+                <p className="text-20-medium">{post.author?.name}</p>
                 <p className="text-16-medium !text-black-300">
-                  @{post?.author?.username}
+                  @{post.author?.username}
                 </p>
               </div>
             </Link>
-
-            <p className="category-tag">{post?.category}</p>
+            <p className="category-tag">{post.category}</p>
           </div>
 
           {parsedContent ? (
@@ -149,21 +160,21 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
         <hr className="my-10 w-full" />
 
         <div className="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
-          {popular?.length > 0 && (
+          {popularBlogs?.length > 0 && (
             <div className="w-full md:w-[25%]">
               <p className="text-26-semibold mb-5">Most Popular</p>
               <ul className="space-y-2">
-                {popular.map((post: BlogCardType) => (
-                  <MostPopular key={post?._id} post={post} />
+                {popularBlogs.map((blog: BlogCardType) => (
+                  <MostPopular key={blog._id} post={blog} />
                 ))}
               </ul>
             </div>
           )}
 
-          {editorPosts?.length > 0 && (
+          {editorPicks?.length > 0 && (
             <div className="w-full md:w-[75%]">
               <p className="text-26-semibold mb-5">Similar blogs</p>
-              <Related editorPosts={editorPosts} />
+              <Related editorPosts={editorPicks} />
             </div>
           )}
         </div>

@@ -96,7 +96,7 @@
   }
 
   .card_grid-sm {
-    @apply grid sm:grid-cols-2 gap-5;
+    @apply grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5;
   }
 
   .no-result {

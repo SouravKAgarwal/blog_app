@@ -2,6 +2,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import "easymde/dist/easymde.min.css";
 import { Toaster } from "@/components/ui/toaster";
+import { Metadata } from "next";
 
 const workSans = localFont({
   src: [
@@ -17,6 +18,27 @@ const workSans = localFont({
   ],
   variable: "--font-work-sans",
 });
+
+export const metadata: Metadata = {
+  title: {
+    default: "Blogify",
+    template: "%s | Blogify",
+  },
+  openGraph: {
+    images: [
+      {
+        url: "https://blogapp-09.vercel.app/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "Blogify",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: ["https://blogapp-09.vercel.app/logo.png"],
+  },
+};
 
 export default function RootLayout({
   children,
