@@ -60,7 +60,9 @@ const parseContent = async (content: string) => {
 
 export async function generateStaticParams() {
   const posts = await client.fetch(BLOGS);
-  return posts.map(({ _id }: BlogCardType) => _id);
+  return posts.map(({ _id }: BlogCardType) => ({
+    id: _id,
+  }));
 }
 
 export async function generateMetadata({
