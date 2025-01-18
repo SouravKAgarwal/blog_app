@@ -13,12 +13,17 @@ const fetchPosts = cache(async (query?: string) => {
   return posts;
 });
 
-export async function generateStaticProps(
+export async function generateStaticParams(
   searchParams: Promise<{ query: string }>
 ) {
   const query = (await searchParams).query;
+
   const posts = await fetchPosts(query);
-  return posts.map(({ category }: BlogCardType) => category);
+
+  return posts.map((post: BlogCardType) => ({
+    _id: post._id,
+    search: query || null,
+  }));
 }
 
 export async function generateMetadata({
