@@ -1,28 +1,25 @@
-import React, { cache } from "react";
 import { EditorPicksCard } from "@/components/Cards";
 import SearchForm from "@/components/SearchForm";
+import { client } from "@/sanity/lib/client";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
-import { BLOG_QUERY } from "@/sanity/lib/queries";
+import { BLOG_QUERY, BLOGS } from "@/sanity/lib/queries";
 import { Blog, Author } from "@/sanity/types";
+import { cache } from "react";
 
 export type BlogCardType = Omit<Blog, "author"> & { author: Author };
 
 const fetchPosts = cache(async (query?: string) => {
   const params = { search: query || null };
   const { data: posts } = await sanityFetch({ query: BLOG_QUERY, params });
+
   return posts;
 });
 
-export async function generateStaticParams(
-  searchParams: Promise<{ query: string }>
-) {
-  const query = (await searchParams).query;
+export async function generateStaticParams() {
+  const posts = await client.fetch(BLOGS);
 
-  const posts = await fetchPosts(query);
-
-  return posts.map((post: BlogCardType) => ({
-    _id: post._id,
-    search: query || null,
+  return posts.map(({ title, category, author }: BlogCardType) => ({
+    query: title || category || author?.name,
   }));
 }
 
