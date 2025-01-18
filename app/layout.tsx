@@ -28,7 +28,7 @@ export const metadata: Metadata = {
   openGraph: {
     images: [
       {
-        url: "https://blogapp-09.vercel.app/logo.png",
+        url: "https://blogapp-09.vercel.app/opengraph.png",
         width: 1200,
         height: 630,
         alt: "Blogify",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    images: ["https://blogapp-09.vercel.app/logo.png"],
+    images: ["https://blogapp-09.vercel.app/opengraph.png"],
   },
 };
 
