@@ -15,9 +15,9 @@ export const BLOG_QUERY =
   image,
 }`);
 
-export const BLOGS = defineQuery(`*[_type == "blog" ] {_id}`);
+export const BLOGS = defineQuery(`*[_type == "blog" ] {_id, _updatedAt}`);
 
-export const AUTHORS = defineQuery(`*[_type == "author" ] {_id}`);
+export const AUTHORS = defineQuery(`*[_type == "author" ] {_id, _updatedAt}`);
 
 export const BLOG_BY_ID_QUERY =
   defineQuery(`*[_type == "blog" && _id == $id][0]{

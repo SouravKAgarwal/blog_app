@@ -1,8 +1,7 @@
 import { EditorPicksCard } from "@/components/Cards";
 import SearchForm from "@/components/SearchForm";
-import { client } from "@/sanity/lib/client";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
-import { BLOG_QUERY, BLOGS } from "@/sanity/lib/queries";
+import { BLOG_QUERY } from "@/sanity/lib/queries";
 import { Blog, Author } from "@/sanity/types";
 import { cache } from "react";
 
@@ -14,14 +13,6 @@ const fetchPosts = cache(async (query?: string) => {
 
   return posts;
 });
-
-export async function generateStaticParams() {
-  const posts = await client.fetch(BLOGS);
-
-  return posts.map(({ title, category, author }: BlogCardType) => ({
-    query: title || category || author?.name,
-  }));
-}
 
 export async function generateMetadata({
   searchParams,

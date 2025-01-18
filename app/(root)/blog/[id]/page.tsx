@@ -108,7 +108,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
     fetchEditorPicks(),
   ]);
 
-  if (!post) return notFound();
+  if (!post) notFound();
 
   const parsedContent = await parseContent(post.pitch || "");
 
