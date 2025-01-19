@@ -12,7 +12,6 @@ import { cache, Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
 import { BlogCardType } from "../../page";
-import { MostPopular } from "@/components/Cards";
 import Image from "next/image";
 import rehypeDocument from "rehype-document";
 import rehypeFormat from "rehype-format";
@@ -23,6 +22,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import { unified } from "unified";
 import Related from "@/components/Related";
+import { MostPopular } from "@/components/Cards";
+import { BsFacebook, BsTwitterX, BsWhatsapp } from "react-icons/bs";
 
 export const experimental_ppr = true;
 
@@ -185,6 +186,33 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           <View id={id} />
         </Suspense>
       </section>
+
+      <div className="fixed right-0 top-1/2 transform -translate-y-1/2 flex flex-col items-center space-y-4 bg-white p-4 shadow-lg rounded-l-lg">
+        <Link
+          href={`https://www.facebook.com/sharer/sharer.php?u=https://blogapp-09.vercel.app/blog/${id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-link facebook"
+        >
+          <BsFacebook />
+        </Link>
+        <Link
+          href={`https://wa.me/?text=Check%20out%20this%20blog!%20https://blogapp-09.vercel.app/blog/${id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-link whatsapp"
+        >
+          <BsWhatsapp />
+        </Link>
+        <Link
+          href={`https://twitter.com/intent/tweet?url=https://blogapp-09.vercel.app/blog/${id}&text=Check%20out%20this%20blog!\n`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="social-link twitter"
+        >
+          <BsTwitterX />
+        </Link>
+      </div>
     </>
   );
 };

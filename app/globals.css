@@ -310,3 +310,24 @@ div[title="source code"] {
   padding: 3px !important;
   border-radius: 2px !important;
 }
+
+/*social-link */
+.social-link {
+  @apply flex items-center justify-center size-7 p-2 text-white rounded-full shadow-md transition duration-200 ease-in-out;
+}
+
+.social-link:hover {
+  @apply scale-110 opacity-90;
+}
+
+.social-link.facebook {
+  @apply bg-blue-600 hover:bg-blue-700;
+}
+
+.social-link.whatsapp {
+  @apply bg-green-500 hover:bg-green-600;
+}
+
+.social-link.twitter {
+  @apply bg-black hover:bg-black;
+}
