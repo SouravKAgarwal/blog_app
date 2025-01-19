@@ -22,7 +22,7 @@ const workSans = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Blogify",
+    default: "Blogify - Write, Share and Grow",
     template: "%s | Blogify",
   },
   openGraph: {
@@ -34,6 +34,7 @@ export const metadata: Metadata = {
         alt: "Blogify",
       },
     ],
+    siteName: "Blogify - Write, Share and Grow",
   },
   twitter: {
     card: "summary_large_image",
