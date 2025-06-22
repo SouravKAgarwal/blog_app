@@ -196,6 +196,10 @@
     @apply rounded-full bg-black-200 font-medium text-[12px] text-white px-2.5 py-1.5 !important;
   }
 
+  .blog-card_edit-btn {
+    @apply rounded-full bg-rose-500 font-medium text-[12px] text-white px-2.5 py-1.5 !important;
+  }
+
   .startup-card_skeleton {
     @apply w-full h-96 rounded-[22px] bg-zinc-400;
   }

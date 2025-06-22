@@ -164,20 +164,9 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
         <div className="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
           {popularBlogs?.length > 0 && (
-            <div className="w-full md:w-[25%]">
-              <p className="text-26-semibold mb-5">Most Popular</p>
-              <ul className="space-y-2">
-                {popularBlogs.map((blog: BlogCardType) => (
-                  <MostPopular key={blog._id} post={blog} />
-                ))}
-              </ul>
-            </div>
-          )}
-
-          {editorPicks?.length > 0 && (
-            <div className="w-full md:w-[75%]">
-              <p className="text-26-semibold mb-5">Similar blogs</p>
-              <Related editorPosts={editorPicks} />
+            <div className="w-full">
+              <p className="text-26-semibold mb-5">Popular blogs</p>
+              <Related editorPosts={popularBlogs} />
             </div>
           )}
         </div>

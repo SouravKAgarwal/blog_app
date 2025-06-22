@@ -73,7 +73,13 @@ export const BlogCard = ({ post }: { post: BlogCardType }) => {
   );
 };
 
-export const EditorPicksCard = ({ post }: { post: BlogCardType }) => {
+export const EditorPicksCard = ({
+  post,
+  isProfile = false,
+}: {
+  post: BlogCardType;
+  isProfile: boolean;
+}) => {
   const {
     _createdAt,
     views,
@@ -122,9 +128,16 @@ export const EditorPicksCard = ({ post }: { post: BlogCardType }) => {
         <Link href={`/?query=${category?.toLowerCase()}`}>
           <p className="text-14-medium">{category}</p>
         </Link>
-        <Button className="blog-card_btn" asChild>
-          <Link href={`/blog/${_id}`}>Details</Link>
-        </Button>
+        <div className="flex gap-2">
+          {isProfile && (
+            <Button className="blog-card_edit-btn" asChild>
+              <Link href={`/blog/edit/${_id}`}>Edit</Link>
+            </Button>
+          )}
+          <Button className="blog-card_btn" asChild>
+            <Link href={`/blog/${_id}`}>Details</Link>
+          </Button>
+        </div>
       </div>
     </div>
   );

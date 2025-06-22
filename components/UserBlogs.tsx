@@ -10,7 +10,7 @@ const UserBlogs = async ({ id }: { id: string }) => {
     <>
       {blogs.length > 0 ? (
         blogs.map((blog: BlogCardType) => (
-          <EditorPicksCard key={blog?._id} post={blog} />
+          <EditorPicksCard isProfile key={blog?._id} post={blog} />
         ))
       ) : (
         <p className="no-result">No posts yet.</p>

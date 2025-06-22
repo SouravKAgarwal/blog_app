@@ -44,8 +44,9 @@ config({
           h6: "h6",
         },
         imgTitleItem: {
-          link: "Add Img Link",
-          
+          upload: "Upload Image",
+          link: "Enter Image Link",
+          clip2upload: "Clip to upload",
         },
         linkModalTips: {
           linkTitle: "Add Link",
@@ -55,6 +56,10 @@ config({
           urlLabel: "Link:",
           urlLabelPlaceHolder: "Enter a link...",
           buttonOK: "OK",
+        },
+        clipModalTips: {
+          title: "Clip to Upload",
+          buttonUpload: "Upload",
         },
         copyCode: {
           text: "Copy",
