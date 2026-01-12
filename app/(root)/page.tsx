@@ -1,4 +1,4 @@
-import { EditorPicksCard } from "@/components/Cards";
+import { UserCards } from "@/components/Cards";
 import SearchForm from "@/components/SearchForm";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { BLOG_QUERY } from "@/sanity/lib/queries";
@@ -56,7 +56,7 @@ export default async function Home({
         <ul className="mt-7 card_grid-sm">
           {posts?.length ? (
             posts.map((post: BlogCardType) => (
-              <EditorPicksCard key={post._id} post={post} />
+              <UserCards key={post._id} post={post} />
             ))
           ) : (
             <p>No blogs found</p>

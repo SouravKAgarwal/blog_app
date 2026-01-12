@@ -3,7 +3,7 @@
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Delete, DeleteIcon, Send, Trash } from "lucide-react";
+import { Send, Trash } from "lucide-react";
 import { formSchema } from "@/lib/validations";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
@@ -46,7 +46,10 @@ const BlogForm = () => {
     setImageURL("");
   };
 
-  const handleFormSubmit = async (prevState: any, formData: FormData) => {
+  const handleFormSubmit = async (
+    prevState: Record<string, unknown>,
+    formData: FormData
+  ) => {
     try {
       const formValues = {
         title: formData.get("title") as string,
@@ -58,7 +61,7 @@ const BlogForm = () => {
 
       await formSchema.parseAsync(formValues);
 
-      const result = await createPitch(prevState, formData, pitch);
+      const result = await createPitch(formData, pitch);
       if (result.status === "SUCCESS") {
         toast({
           title: "Success",
@@ -98,7 +101,7 @@ const BlogForm = () => {
     }
   };
 
-  const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+  const [, formAction, isPending] = useActionState(handleFormSubmit, {
     error: "",
     status: "INITIAL",
   });
@@ -202,7 +205,7 @@ const BlogForm = () => {
       <Button
         type="submit"
         className="startup-form_btn text-white"
-        disabled={isPending}
+        disabled={isPending || isUploading}
       >
         {isPending ? "Submitting..." : "Submit your blog"}
         <Send className="ml-2 size-6" />

@@ -1,11 +1,6 @@
 import { formatDate } from "@/lib/utils";
 import { client } from "@/sanity/lib/client";
-import {
-  PLAYLIST_BY_SLUG_QUERY,
-  BLOG_BY_ID_QUERY,
-  POPULAR_BLOG_BY_VIEW_QUERY,
-  BLOGS,
-} from "@/sanity/lib/queries";
+import { BLOG_BY_ID_QUERY, BLOGS } from "@/sanity/lib/queries";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache, Suspense } from "react";
@@ -21,22 +16,11 @@ import remarkRehype from "remark-rehype";
 import rehypePrettyCode from "rehype-pretty-code";
 import { transformerCopyButton } from "@rehype-pretty/transformers";
 import { unified } from "unified";
-import Related from "@/components/Related";
-import { MostPopular } from "@/components/Cards";
-import { BsFacebook, BsTwitterX, BsWhatsapp } from "react-icons/bs";
 
 export const experimental_ppr = true;
 
 const fetchPostById = cache(async (id: string) => {
   return client.fetch(BLOG_BY_ID_QUERY, { id });
-});
-
-const fetchPopularBlogs = cache(async () => {
-  return client.fetch(POPULAR_BLOG_BY_VIEW_QUERY);
-});
-
-const fetchEditorPicks = cache(async () => {
-  return client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: "editor-picks" });
 });
 
 const parseContent = async (content: string) => {
@@ -103,11 +87,7 @@ export async function generateMetadata({
 const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
 
-  const [post, popularBlogs, { select: editorPicks }] = await Promise.all([
-    fetchPostById(id),
-    fetchPopularBlogs(),
-    fetchEditorPicks(),
-  ]);
+  const post = await fetchPostById(id);
 
   if (!post) notFound();
 
@@ -122,10 +102,12 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
       </section>
 
       <section className="section_container">
-        <img
+        <Image
           src={post.image}
           alt={post.title}
-          className="w-full md:w-2/3 rounded-xl h-auto mx-auto"
+          width={800}
+          height={500}
+          className="w-full md:w-2/3 rounded-xl h-auto mx-auto object-cover"
         />
         <div className="space-y-5 mt-10 max-w-3xl mx-auto">
           <div className="flex-between gap-5">
@@ -160,48 +142,10 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           )}
         </div>
 
-        <hr className="my-10 w-full" />
-
-        <div className="flex flex-col md:flex-row gap-10 max-w-6xl mx-auto">
-          {popularBlogs?.length > 0 && (
-            <div className="w-full">
-              <p className="text-26-semibold mb-5">Popular blogs</p>
-              <Related editorPosts={popularBlogs} />
-            </div>
-          )}
-        </div>
-
         <Suspense fallback={<Skeleton className="view_skeleton" />}>
           <View id={id} />
         </Suspense>
       </section>
-
-      <div className="fixed right-0 top-1/2 transform -translate-y-1/2 flex flex-col items-center space-y-4 bg-white p-4 shadow-lg rounded-l-lg">
-        <Link
-          href={`https://www.facebook.com/sharer/sharer.php?u=https://blogapp-09.vercel.app/blog/${id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="social-link facebook"
-        >
-          <BsFacebook />
-        </Link>
-        <Link
-          href={`https://wa.me/?text=Check%20out%20this%20blog!%20https://blogapp-09.vercel.app/blog/${id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="social-link whatsapp"
-        >
-          <BsWhatsapp />
-        </Link>
-        <Link
-          href={`https://twitter.com/intent/tweet?url=https://blogapp-09.vercel.app/blog/${id}&text=Check%20out%20this%20blog!\n`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="social-link twitter"
-        >
-          <BsTwitterX />
-        </Link>
-      </div>
     </>
   );
 };

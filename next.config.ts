@@ -1,12 +1,6 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  typescript: {
-    ignoreBuildErrors: true,
-  },
-  eslint: {
-    ignoreDuringBuilds: true,
-  },
   images: {
     remotePatterns: [
       {
@@ -14,14 +8,6 @@ const nextConfig: NextConfig = {
         hostname: "*",
       },
     ],
-  },
-  experimental: {
-    ppr: "incremental",
-  },
-  devIndicators: {
-    appIsrStatus: true,
-    buildActivity: true,
-    buildActivityPosition: "bottom-right",
   },
 };
 

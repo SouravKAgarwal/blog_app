@@ -3,7 +3,7 @@
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { Delete, Send, Trash } from "lucide-react";
+import { Send, Trash } from "lucide-react";
 import { formSchema } from "@/lib/validations";
 import { z } from "zod";
 import { useToast } from "@/hooks/use-toast";
@@ -48,7 +48,10 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
     setImageURL("");
   };
 
-  const handleFormSubmit = async (prevState: any, formData: FormData) => {
+  const handleFormSubmit = async (
+    prevState: Record<string, unknown>,
+    formData: FormData
+  ) => {
     try {
       const formValues = {
         title: formData.get("title") as string,
@@ -60,7 +63,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
 
       await formSchema.parseAsync(formValues);
 
-      const result = await updatePitch(prevState, formData, editPitch, _id);
+      const result = await updatePitch(formData, editPitch, _id);
       if (result.status === "SUCCESS") {
         toast({
           title: "Success",
@@ -99,7 +102,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
     }
   };
 
-  const [state, formAction, isPending] = useActionState(handleFormSubmit, {
+  const [, formAction, isPending] = useActionState(handleFormSubmit, {
     error: "",
     status: "INITIAL",
   });
@@ -115,7 +118,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
           name="title"
           className="startup-form_input"
           placeholder="Blog Title"
-          defaultValue={title} 
+          defaultValue={title}
         />
         {errors.title && <p className="startup-form_error">{errors.title}</p>}
       </div>
@@ -129,7 +132,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
           name="description"
           className="startup-form_textarea"
           placeholder="Blog Description"
-          defaultValue={description} 
+          defaultValue={description}
         />
         {errors.description && (
           <p className="startup-form_error">{errors.description}</p>
@@ -145,7 +148,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
           name="category"
           className="startup-form_input"
           placeholder="Blog Category (Health, Travel, ...)"
-          defaultValue={category} 
+          defaultValue={category}
         />
         {errors.category && (
           <p className="startup-form_error">{errors.category}</p>
@@ -171,7 +174,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
               id="link"
               name="link"
               type="text"
-              value={imageURL} 
+              value={imageURL}
               onChange={(e) => setImageURL(e.target.value)}
               className="startup-form_input"
               placeholder="Blog Image URL"

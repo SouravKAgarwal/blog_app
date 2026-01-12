@@ -7,7 +7,7 @@ import { notFound, redirect } from "next/navigation";
 import { cache } from "react";
 
 export const metadata: Metadata = {
-  title: "Create",
+  title: "Edit",
   description: "Write, Share and Grow",
 };
 
@@ -24,7 +24,7 @@ const EditPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const post = await fetchPost(id);
   if (!post) notFound();
 
-  if (post?.author?.id !== session.user.id) {
+  if (post?.author?.id !== session?.user?.id) {
     redirect(`/blog/${id}`);
   }
 
