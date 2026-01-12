@@ -12,7 +12,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (!profile?.id) return false;
 
       const { name, email, image } = user;
-      const { id, login, bio } = profile; 
+      const { id, login, bio } = profile;
 
       const existingUser = await client.fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
         id,
@@ -39,7 +39,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       profile,
     }: {
       token: JWT;
-      account: any;
+      account?: any;
       profile?: any;
     }) {
       if (account && profile) {

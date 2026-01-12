@@ -1,12 +1,46 @@
-@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@plugin "tailwindcss-animate";
+@plugin "@tailwindcss/typography";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-work-sans: "Work Sans", "sans-serif";
+
+  --radius: 0.5rem;
+
+  --color-primary-100: #ffe8f0;
+  --color-primary: #ee2b69;
+
+  --color-secondary: #fbe843;
+
+  --color-black-100: #333333;
+  --color-black-200: #141413;
+  --color-black-300: #7d8087;
+  --color-black: #000000;
+
+  --color-white-100: #f7f7f7;
+  --color-white: #ffffff;
+
+  --shadow-100: 2px 2px 0px 0px rgb(0, 0, 0);
+  --shadow-200: 2px 2px 0px 2px rgb(0, 0, 0);
+  --shadow-300: 2px 2px 0px 2px rgb(238, 43, 105);
+
+  --breakpoint-xs: 475px;
+}
+
+/*
+  The default border-color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to sure everything still looks the same.
+*/
 @layer base {
-  :root {
-    --radius: 0.5rem;
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
   }
 }
 
@@ -72,11 +106,22 @@
   }
 
   .pink_container {
-    @apply w-full bg-primary min-h-[530px] pattern flex justify-center items-center flex-col py-10 px-6;
+    @apply w-full bg-primary min-h-[530px] flex justify-center items-center flex-col py-10 px-6;
+    background-image: linear-gradient(
+      to right,
+      transparent 49.5%,
+      rgba(251, 232, 67, 0.2) 49.5%,
+      rgba(251, 232, 67, 0.6) 50.5%,
+      transparent 50.5%
+    );
+    background-size: 5% 100%;
+    background-position: center;
+    background-repeat: repeat-x;
   }
 
   .subtitle {
-    @apply bg-secondary px-6 py-3 font-work-sans font-bold rounded-sm uppercase relative tag-tri;
+    @apply bg-secondary px-6 py-3 font-work-sans font-bold rounded-sm uppercase relative;
+    @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
   }
 
   .heading {
@@ -131,15 +176,15 @@
 
   /* navbar */
   .avatar {
-    @apply p-0 focus-visible:ring-0 bg-none rounded-full drop-shadow-md !important;
+    @apply p-0 focus-visible:ring-0 bg-none rounded-full drop-shadow-md;
   }
 
   .dropdown-menu {
-    @apply w-56 border-[5px] border-black bg-white p-5 rounded-2xl !important;
+    @apply w-56 border-[5px] border-black bg-white p-5 rounded-2xl;
   }
 
   .login {
-    @apply border-[5px] py-4 border-black bg-white text-black relative shadow-100 font-work-sans font-medium hover:shadow-none transition-all duration-500 !important;
+    @apply border-[5px] py-4 border-black bg-white text-black relative shadow-100 font-work-sans font-medium hover:shadow-none transition-all duration-500;
   }
 
   /* searchform */
@@ -152,7 +197,7 @@
   }
 
   .search-btn {
-    @apply size-[50px] rounded-full bg-black flex justify-center items-center !important;
+    @apply size-[50px] rounded-full bg-black flex justify-center items-center;
   }
 
   /* startupcard */
@@ -173,7 +218,7 @@
   }
 
   .startup-card_btn {
-    @apply rounded-full bg-black-200 font-medium text-[16px] text-white px-5 py-3 !important;
+    @apply rounded-full bg-black-200 font-medium text-[16px] text-white px-5 py-3;
   }
 
   .blog-card {
@@ -193,11 +238,11 @@
   }
 
   .blog-card_btn {
-    @apply rounded-full bg-black-200 font-medium text-[12px] text-white px-2.5 py-1.5 !important;
+    @apply rounded-full bg-black-200 font-medium text-[12px] text-white px-2.5 py-1.5;
   }
 
   .blog-card_edit-btn {
-    @apply rounded-full bg-rose-500 font-medium text-[12px] text-white px-2.5 py-1.5 !important;
+    @apply rounded-full bg-rose-500 font-medium text-[12px] text-white px-2.5 py-1.5;
   }
 
   .startup-card_skeleton {
@@ -214,11 +259,11 @@
   }
 
   .startup-form_input {
-    @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black-300 !important;
+    @apply border-[3px] border-black px-5 py-7 text-[18px] text-black font-semibold rounded-full mt-3 placeholder:text-black-300;
   }
 
   .startup-form_textarea {
-    @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black-300 !important;
+    @apply border-[3px] border-black p-5 text-[18px] text-black font-semibold rounded-[20px] mt-3 placeholder:text-black-300;
   }
 
   .startup-form_error {
@@ -226,11 +271,11 @@
   }
 
   .startup-form_editor {
-    @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300 !important;
+    @apply mt-3 border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300;
   }
 
   .startup-form_btn {
-    @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px] !important;
+    @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px];
   }
 
   /* view */
@@ -265,7 +310,7 @@
 }
 
 .md-editor {
-  @apply mt-3 rounded-[22px] border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300 !important;
+  @apply mt-3 rounded-[22px] border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300;
 }
 
 svg.md-editor-icon {
