@@ -17,9 +17,6 @@ importers:
       '@radix-ui/react-toast':
         specifier: ^1.2.15
         version: 1.2.15(@types/react-dom@19.2.3(@types/react@19.2.8))(@types/react@19.2.8)(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
-      '@rehype-pretty/transformers':
-        specifier: ^0.13.2
-        version: 0.13.2
       '@sanity/image-url':
         specifier: ^2.0.2
         version: 2.0.2
@@ -38,9 +35,6 @@ importers:
       lucide-react:
         specifier: ^0.562.0
         version: 0.562.0(react@19.2.3)
-      markdown-it:
-        specifier: ^14.1.0
-        version: 14.1.0
       md-editor-rt:
         specifier: ^6.3.1
         version: 6.3.1(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
@@ -87,9 +81,6 @@ importers:
       '@tailwindcss/postcss':
         specifier: ^4.1.18
         version: 4.1.18
-      '@types/markdown-it':
-        specifier: ^14.1.2
-        version: 14.1.2
       '@types/node':
         specifier: ^25.0.6
         version: 25.0.6
@@ -2169,10 +2160,6 @@ packages:
         optional: true
       '@types/react-dom':
         optional: true
-
-  '@rehype-pretty/transformers@0.13.2':
-    resolution: {integrity: sha512-p2ciQSwqy5Ip8aNUa9q6rdS/hJZXrxHYYfDVOHvKOsBu3t9HDmQ65YX6r9Qbl19vi160OAxmGF7MIoCRDJrRhg==}
-    engines: {node: '>=18'}
 
   '@rexxars/react-json-inspector@9.0.1':
     resolution: {integrity: sha512-4uZ4RnrVoOGOShIKKcPoF+qhwDCZJsPPqyoEoW/8HRdzNknN9Q2yhlbEgTX1lMZunF1fv7iHzAs+n1vgIgfg/g==}
@@ -8914,8 +8901,6 @@ snapshots:
     optionalDependencies:
       '@types/react': 19.2.8
       '@types/react-dom': 19.2.3(@types/react@19.2.8)
-
-  '@rehype-pretty/transformers@0.13.2': {}
 
   '@rexxars/react-json-inspector@9.0.1(react@19.2.3)':
     dependencies:

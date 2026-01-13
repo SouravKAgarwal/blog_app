@@ -2,8 +2,7 @@ import { auth, signIn, signOut } from "@/auth";
 import { BadgePlus, LogOut } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Avatar, AvatarFallback } from "./ui/avatar";
-import { AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Navbar = async () => {
   const session = await auth();
