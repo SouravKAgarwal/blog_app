@@ -119,6 +119,9 @@ const Editor = ({
         value={text}
         onChange={setText}
         language="en-US"
+        previewTheme="github"
+        codeTheme="github"
+        toolbarsExclude={["github", "htmlPreview", "catalog"]}
         onUploadImg={onUploadImg}
       />
     </div>

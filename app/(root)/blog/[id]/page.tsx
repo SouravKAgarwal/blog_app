@@ -66,7 +66,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <>
-      <section className="pink_container min-h-[230px]!">
+      <section className="pink_container min-h-57.5!">
         <p className="subtitle">{formatDate(post._createdAt)}</p>
         <h1 className="heading">{post.title}</h1>
         <p className="sub-heading max-w-5xl!">{post.description}</p>
@@ -78,11 +78,11 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           alt={post.title}
           width={800}
           height={500}
-          className="w-full md:w-3/4 lg:w-2/3 rounded-2xl h-auto mx-auto object-cover shadow-2xl hover:shadow-3xl transition-shadow duration-500 border-4 border-white"
+          className="w-full md:w-3/4 lg:w-2/3 rounded-2xl h-auto mx-auto object-cover border-4 border-white"
           priority
         />
-        <div className="space-y-5 mt-10 max-w-3xl mx-auto">
-          <div className="flex-between gap-5">
+        <div className="space-y-5 mt-10">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-5 max-w-3xl mx-auto mb-10">
             <Link
               href={`/user/${post.author?._id}`}
               className="flex gap-3 items-center group"
@@ -106,21 +106,17 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="category-tag">{post.category}</p>
           </div>
 
-          <div className="max-w-4xl mx-auto">
-            {post.pitch ? (
-              <ViewMarkdown content={post.pitch} />
-            ) : (
-              <p className="no-result">No details provided</p>
-            )}
-          </div>
+          {post.pitch ? (
+            <ViewMarkdown content={post.pitch} />
+          ) : (
+            <p className="no-result">No details provided</p>
+          )}
         </div>
 
-        <div className="max-w-4xl mx-auto px-4 mt-10">
-          <div className="border-t border-gray-100 pt-8">
-            <Suspense fallback={<Skeleton className="view_skeleton" />}>
-              <View id={id} />
-            </Suspense>
-          </div>
+        <div className="max-w-4xl mx-auto px-4">
+          <Suspense fallback={<Skeleton className="view_skeleton" />}>
+            <View id={id} />
+          </Suspense>
         </div>
       </section>
     </>
