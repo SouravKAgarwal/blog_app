@@ -6,42 +6,15 @@ import { notFound } from "next/navigation";
 import { cache, Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
+import ViewMarkdown from "@/components/ViewMarkdown";
 import { BlogCardType } from "../../page";
 import Image from "next/image";
-import rehypeDocument from "rehype-document";
-import rehypeFormat from "rehype-format";
-import rehypeStringify from "rehype-stringify";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import rehypePrettyCode from "rehype-pretty-code";
-import { transformerCopyButton } from "@rehype-pretty/transformers";
-import { unified } from "unified";
 
 export const experimental_ppr = true;
 
 const fetchPostById = cache(async (id: string) => {
   return client.fetch(BLOG_BY_ID_QUERY, { id });
 });
-
-const parseContent = async (content: string) => {
-  const processor = unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypeDocument, { title: "👋🌍" })
-    .use(rehypeFormat)
-    .use(rehypeStringify)
-    .use(rehypePrettyCode, {
-      theme: "github-dark",
-      transformers: [
-        transformerCopyButton({
-          visibility: "always",
-          feedbackDuration: 3000,
-        }),
-      ],
-    });
-
-  return content ? (await processor.process(content)).toString() : "";
-};
 
 export async function generateStaticParams() {
   const posts = await client.fetch(BLOGS);
@@ -91,14 +64,12 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   if (!post) notFound();
 
-  const parsedContent = await parseContent(post.pitch || "");
-
   return (
     <>
-      <section className="pink_container !min-h-[230px]">
+      <section className="pink_container min-h-[230px]!">
         <p className="subtitle">{formatDate(post._createdAt)}</p>
         <h1 className="heading">{post.title}</h1>
-        <p className="sub-heading !max-w-5xl">{post.description}</p>
+        <p className="sub-heading max-w-5xl!">{post.description}</p>
       </section>
 
       <section className="section_container">
@@ -107,24 +78,27 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           alt={post.title}
           width={800}
           height={500}
-          className="w-full md:w-2/3 rounded-xl h-auto mx-auto object-cover"
+          className="w-full md:w-3/4 lg:w-2/3 rounded-2xl h-auto mx-auto object-cover shadow-2xl hover:shadow-3xl transition-shadow duration-500 border-4 border-white"
+          priority
         />
         <div className="space-y-5 mt-10 max-w-3xl mx-auto">
           <div className="flex-between gap-5">
             <Link
               href={`/user/${post.author?._id}`}
-              className="flex gap-2 items-center mb-3"
+              className="flex gap-3 items-center group"
             >
               <Image
                 src={post.author?.image}
                 height={64}
                 width={64}
-                className="rounded-full drop-shadow-lg"
+                className="rounded-full drop-shadow-md group-hover:scale-105 transition-transform duration-300 ring-2 ring-transparent group-hover:ring-primary/50"
                 alt="avatar"
               />
               <div>
-                <p className="text-20-medium">{post.author?.name}</p>
-                <p className="text-16-medium !text-black-300">
+                <p className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
+                  {post.author?.name}
+                </p>
+                <p className="text-sm font-medium text-gray-500">
                   @{post.author?.username}
                 </p>
               </div>
@@ -132,19 +106,22 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="category-tag">{post.category}</p>
           </div>
 
-          {parsedContent ? (
-            <article
-              className="prose prose-a:text-blue-600 max-w-4xl prose-pre:max-h-[300px] font-work-sans"
-              dangerouslySetInnerHTML={{ __html: parsedContent }}
-            />
-          ) : (
-            <p className="no-result">No details provided</p>
-          )}
+          <div className="max-w-4xl mx-auto">
+            {post.pitch ? (
+              <ViewMarkdown content={post.pitch} />
+            ) : (
+              <p className="no-result">No details provided</p>
+            )}
+          </div>
         </div>
 
-        <Suspense fallback={<Skeleton className="view_skeleton" />}>
-          <View id={id} />
-        </Suspense>
+        <div className="max-w-4xl mx-auto px-4 mt-10">
+          <div className="border-t border-gray-100 pt-8">
+            <Suspense fallback={<Skeleton className="view_skeleton" />}>
+              <View id={id} />
+            </Suspense>
+          </div>
+        </div>
       </section>
     </>
   );

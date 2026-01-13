@@ -156,16 +156,31 @@ const BlogForm = () => {
           Upload Image
         </label>
         {!imageURL ? (
-          <input
-            id="link"
-            name="link"
-            type="file"
-            onChange={handleImageUpload}
-            accept="image/*"
-            className="file:mr-4 file:p-4 file:border-0 file:text-lg file:font-semibold file:bg-primary file:text-black border-[3px] border-black rounded-full"
-          />
+          <div className="flex items-center justify-center w-full">
+            <label
+              htmlFor="link"
+              className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 border-gray-300 hover:border-primary transition-all duration-300"
+            >
+              <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                <p className="mb-2 text-sm text-gray-500 font-semibold">
+                  Click to upload
+                </p>
+                <p className="text-xs text-gray-500">
+                  SVG, PNG, JPG or GIF (MAX. 800x400px)
+                </p>
+              </div>
+              <input
+                id="link"
+                name="link"
+                type="file"
+                onChange={handleImageUpload}
+                accept="image/*"
+                className="hidden"
+              />
+            </label>
+          </div>
         ) : (
-          <div className="relative">
+          <>
             <Input
               id="link"
               name="link"
@@ -174,28 +189,30 @@ const BlogForm = () => {
               className="startup-form_input"
               placeholder="Blog Image URL"
             />
-            <Image
-              src={imageURL}
-              alt="post_image"
-              width={1440}
-              height={1440}
-              className="rounded-lg w-full h-auto border mt-4 border-black-300 object-cover"
-            />
-            <button
-              type="button"
-              onClick={handleImageDelete}
-              className="absolute bottom-4 right-2 bg-primary text-white p-1 rounded-full hover:bg-red-600"
-            >
-              <Trash size={20} />
-            </button>
-          </div>
+            <div className="relative group">
+              <Image
+                src={imageURL}
+                alt="post_image"
+                width={1440}
+                height={1440}
+                className="rounded-xl w-full max-h-[400px] object-cover shadow-md"
+              />
+              <button
+                type="button"
+                onClick={handleImageDelete}
+                className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors shadow-lg opacity-0 group-hover:opacity-100"
+              >
+                <Trash size={20} />
+              </button>
+            </div>
+          </>
         )}
         {errors.link && <p className="startup-form_error">{errors.link}</p>}
       </div>
 
       <div data-color-mode="light">
-        <label htmlFor="Pitch" className="startup-form_label">
-          Pitch
+        <label htmlFor="Pitch" className="startup-form_label mb-4 block">
+          Content
         </label>
 
         <Editor text={pitch} setText={(value: string) => setPitch(value)} />
@@ -204,7 +221,7 @@ const BlogForm = () => {
 
       <Button
         type="submit"
-        className="startup-form_btn text-white"
+        className="startup-form_btn text-white w-full h-14 text-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
         disabled={isPending || isUploading}
       >
         {isPending ? "Submitting..." : "Submit your blog"}

@@ -34,7 +34,7 @@ export default async function Home({
 }: {
   searchParams: Promise<{ query: string }>;
 }) {
-  const query = (await searchParams).query;
+  const { query } = await searchParams;
   const posts = await fetchPosts(query);
 
   return (

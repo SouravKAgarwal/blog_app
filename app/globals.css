@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@import "./markdown-fix.css";
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
 
@@ -30,10 +30,6 @@
   --breakpoint-xs: 475px;
 }
 
-/*
-  The default border-color has changed to `currentColor` in Tailwind CSS v4,
-  so we've added these compatibility styles to sure everything still looks the same.
-*/
 @layer base {
   *,
   ::after,
@@ -275,7 +271,7 @@
   }
 
   .startup-form_btn {
-    @apply bg-primary border-[4px] border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px];
+    @apply bg-primary border-4 border-black rounded-full p-5 min-h-[70px] w-full font-bold text-[18px];
   }
 
   /* view */
@@ -314,25 +310,34 @@
 }
 
 svg.md-editor-icon {
-  width: 24px !important;
-  height: 24px !important;
+  width: 20px !important;
+  height: 20px !important;
 }
 
 .md-editor-footer {
   display: none !important;
 }
 
+.md-editor-toolbar-item > svg.lucide-github-icon,
+.md-editor-toolbar-item > svg.lucide-list-tree,
+.md-editor-toolbar-item > svg.lucide-code-xml {
+  display: none !important;
+}
+
 .md-editor-toolbar {
+  display: flex !important;
   flex-wrap: wrap !important;
   padding: 10px !important;
 }
 
 .md-editor-toolbar-left {
+  display: flex !important;
   flex-wrap: wrap !important;
 }
 
 div[title="catalog"],
-div[title="source code"] {
+div[title="source code"],
+div[title="html preview"] {
   display: none !important;
 }
 
@@ -360,23 +365,3 @@ div[title="source code"] {
   border-radius: 2px !important;
 }
 
-/*social-link */
-.social-link {
-  @apply flex items-center justify-center size-7 p-2 text-white rounded-full shadow-md transition duration-200 ease-in-out;
-}
-
-.social-link:hover {
-  @apply scale-110 opacity-90;
-}
-
-.social-link.facebook {
-  @apply bg-blue-600 hover:bg-blue-700;
-}
-
-.social-link.whatsapp {
-  @apply bg-green-500 hover:bg-green-600;
-}
-
-.social-link.twitter {
-  @apply bg-black hover:bg-black;
-}

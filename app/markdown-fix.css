@@ -1,0 +1,13 @@
+#view-markdown ul {
+  list-style-type: disc !important;
+  padding-left: 20px !important;
+}
+
+#view-markdown ol {
+  list-style-type: decimal !important;
+  padding-left: 20px !important;
+}
+
+#view-markdown li {
+  display: list-item !important;
+}

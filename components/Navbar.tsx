@@ -9,10 +9,10 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <header className="px-5 bg-white shadow-sm font-work-sans">
+    <header className="px-6 py-2 bg-white shadow-sm font-work-sans">
       <nav className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/logo.png" alt="logo" width={120} height={60} />
+          <Image src="/logo.png" alt="logo" width={100} height={50} />
         </Link>
 
         <div className="flex items-center gap-5 text-black font-medium">

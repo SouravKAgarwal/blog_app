@@ -1,5 +1,6 @@
-import { MdEditor, config } from "md-editor-rt";
+import { MdEditor, ToolbarTips, config } from "md-editor-rt";
 import "md-editor-rt/lib/style.css";
+import { uploadImageToCloudinary } from "@/lib/cloudinary";
 
 config({
   editorConfig: {
@@ -34,7 +35,7 @@ config({
           htmlPreview: "html preview",
           catalog: "catalog",
           github: "source code",
-        },
+        } as ToolbarTips,
         titleItem: {
           h1: "h1",
           h2: "h2",
@@ -92,9 +93,34 @@ const Editor = ({
   text: string;
   setText: (text: string) => void;
 }) => {
+  const onUploadImg = async (
+    files: File[],
+    callback: (urls: string[]) => void
+  ) => {
+    const res = await Promise.all(
+      files.map((file) => {
+        return new Promise<string>(async (resolve, reject) => {
+          try {
+            const uploadedUrl = await uploadImageToCloudinary(file);
+            resolve(uploadedUrl);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      })
+    );
+
+    callback(res.map((item) => item));
+  };
+
   return (
     <div className="max-w-2xl">
-      <MdEditor value={text} onChange={setText} language="en-US" />
+      <MdEditor
+        value={text}
+        onChange={setText}
+        language="en-US"
+        onUploadImg={onUploadImg}
+      />
     </div>
   );
 };
