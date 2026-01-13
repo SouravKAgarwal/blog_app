@@ -43,7 +43,7 @@ export default async function Home({
         <h1 className="heading">
           Write Your Blogs, <br /> Share with global readers
         </h1>
-        <p className="sub-heading !max-w-3xl">
+        <p className="sub-heading max-w-3xl!">
           Submit Blogs and share your experiences.
         </p>
         <SearchForm query={query} />

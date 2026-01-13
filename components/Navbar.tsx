@@ -9,13 +9,13 @@ const Navbar = async () => {
   const session = await auth();
 
   return (
-    <header className="px-5 py-3 bg-white shadow-sm font-work-sans">
+    <header className="px-5 bg-white shadow-sm font-work-sans">
       <nav className="flex justify-between items-center">
         <Link href="/">
-          <Image src="/logo.png" alt="logo" width={105} height={40} />
+          <Image src="/logo-1.png" alt="logo" width={120} height={60} />
         </Link>
 
-        <div className="flex items-center gap-5 text-black font-[500]">
+        <div className="flex items-center gap-5 text-black font-medium">
           {session && session?.user ? (
             <>
               <Link href="/blog/create">
