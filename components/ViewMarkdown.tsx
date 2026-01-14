@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { MdCatalog, MdPreview } from "md-editor-rt";
 import "md-editor-rt/lib/preview.css";
-import { useEffect, useState } from "react";
 
 type ViewMarkdownProps = {
   content: string;
@@ -31,6 +31,7 @@ const ViewMarkdown = ({ content }: ViewMarkdownProps) => {
               theme="light"
               syncWith="preview"
               scrollElement={scrollElement}
+              scrollElementOffsetTop={10}
             />
           </aside>
         </div>
@@ -43,6 +44,7 @@ const ViewMarkdown = ({ content }: ViewMarkdownProps) => {
           language="en-US"
           previewTheme="github"
           codeTheme="github"
+          codeFoldable={false}
           showCodeRowNumber
         />
       </main>

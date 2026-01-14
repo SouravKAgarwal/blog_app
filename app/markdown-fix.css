@@ -25,14 +25,30 @@
 }
 
 .md-catalog-link:hover span {
-  color: var(--color-primary);
-  transform: translateX(4px);
+  color: var(--color-primary) !important;
+  transform: translateX(4px) !important;
+}
+
+.md-editor-catalog-link:hover > span {
+  color: var(--color-primary) !important;
 }
 
 .md-editor-catalog-active > span {
-  color: var(--color-primary);
-  font-weight: 600;
-  transform: translateX(4px);
+  color: var(--color-primary) !important;
+  font-weight: 600 !important;
+  transform: translateX(4px) !important;
+}
+
+.md-editor-catalog-indicator {
+  display: none !important;
+}
+
+.md-editor-preview .md-editor-code pre code {
+  font-size: 13px !important;
+}
+
+div.github-theme code {
+  font-size: 0.85em !important;
 }
 
 .markdown-content {
@@ -44,6 +60,54 @@
   font-size: 18px;
   line-height: 1.8;
   color: #333;
+}
+
+.md-editor-code-head {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  height: 40px !important;
+  padding: 0 12px !important;
+  background-color: #f6f8fa !important;
+  border-top-left-radius: 8px !important;
+  border-top-right-radius: 8px !important;
+  border: 1px solid #d0d7de !important;
+  margin-bottom: 0 !important;
+}
+
+.md-editor-code-action {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  height: 100% !important;
+}
+
+.md-editor-code-flag {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  height: 100% !important;
+}
+
+.md-editor-code-flag span {
+  margin-block-start: 0px !important;
+}
+
+.md-editor-code pre {
+  margin-top: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-top-right-radius: 0 !important;
+  border: 1px solid #d0d7de !important;
+  border-bottom-left-radius: 8px !important;
+  border-bottom-right-radius: 8px !important;
+  background-color: #f6f8fa !important;
+}
+
+/* Ensure code inside pre matches */
+.md-editor-code pre code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  font-size: 13px !important;
+  line-height: 1.5 !important;
 }
 
 .md-preview h1,
@@ -117,4 +181,28 @@
     width: 90vw !important;
     overflow-x: auto !important;
   }
+}
+
+.md-editor-codetab-label {
+  display: flex !important;
+  align-items: center !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+  gap: 12px !important;
+}
+
+.md-editor-codetab-label label {
+  font-size: 12px !important;
+  text-decoration: none !important;
+  cursor: pointer !important;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
+  color: #57606a !important;
+  font-weight: 500 !important;
+  padding: 4px 0 !important;
+}
+
+.md-editor-codetab-label input:checked + label {
+  font-weight: 600 !important;
+  border-block-end: none !important;
+  color: var(--color-primary) !important;
 }
