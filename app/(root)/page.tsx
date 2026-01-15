@@ -3,18 +3,17 @@ import SearchForm from "@/components/SearchForm";
 import { sanityFetch, SanityLive } from "@/sanity/lib/live";
 import { BLOG_QUERY } from "@/sanity/lib/queries";
 import { Blog, Author } from "@/sanity/types";
-import { cache } from "react";
-
-export const experimental_ppr = true;
+import { Suspense } from "react";
 
 export type BlogCardType = Omit<Blog, "author"> & { author: Author };
 
-const fetchPosts = cache(async (query?: string) => {
+async function fetchPosts(query?: string) {
+  "use cache";
   const params = { search: query || null };
   const { data: posts } = await sanityFetch({ query: BLOG_QUERY, params });
 
   return posts;
-});
+}
 
 export async function generateMetadata({
   searchParams,
@@ -31,14 +30,11 @@ export async function generateMetadata({
   };
 }
 
-export default async function Home({
+export default function Home({
   searchParams,
 }: {
   searchParams: Promise<{ query: string }>;
 }) {
-  const { query } = await searchParams;
-  const posts = await fetchPosts(query);
-
   return (
     <>
       <section className="pink_container">
@@ -48,25 +44,55 @@ export default async function Home({
         <p className="sub-heading max-w-3xl!">
           Submit Blogs and share your experiences.
         </p>
-        <SearchForm query={query} />
+        <Suspense fallback={<SearchForm />}>
+          <SearchFormWrapper searchParams={searchParams} />
+        </Suspense>
       </section>
 
       <section className="section_container">
-        <p className="text-30-semibold">
-          {query ? `Search results for "${query}"` : "All Blogs"}
-        </p>
-        <ul className="mt-7 card_grid-sm">
-          {posts?.length ? (
-            posts.map((post: BlogCardType) => (
-              <UserCards key={post._id} post={post} />
-            ))
-          ) : (
-            <p>No blogs found</p>
-          )}
-        </ul>
+        <Suspense fallback={<p>Loading results...</p>}>
+          <SearchResults searchParams={searchParams} />
+        </Suspense>
       </section>
 
-      <SanityLive />
+      <Suspense fallback={null}>
+        <SanityLive />
+      </Suspense>
+    </>
+  );
+}
+
+async function SearchFormWrapper({
+  searchParams,
+}: {
+  searchParams: Promise<{ query: string }>;
+}) {
+  const { query } = await searchParams;
+  return <SearchForm query={query} />;
+}
+
+async function SearchResults({
+  searchParams,
+}: {
+  searchParams: Promise<{ query: string }>;
+}) {
+  const { query } = await searchParams;
+  const posts = await fetchPosts(query);
+
+  return (
+    <>
+      <p className="text-30-semibold">
+        {query ? `Search results for "${query}"` : "All Blogs"}
+      </p>
+      <ul className="mt-7 card_grid-sm">
+        {posts?.length ? (
+          posts.map((post: BlogCardType) => (
+            <UserCards key={post._id} post={post} />
+          ))
+        ) : (
+          <p>No blogs found</p>
+        )}
+      </ul>
     </>
   );
 }

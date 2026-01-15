@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { MdPreview } from "md-editor-rt";
 import "md-editor-rt/lib/preview.css";
+import "./editor.css";
 
 type ViewMarkdownProps = {
   content: string;

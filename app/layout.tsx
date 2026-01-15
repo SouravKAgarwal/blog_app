@@ -19,6 +19,7 @@ const workSans = localFont({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_URL || "http://localhost:3000"),
   title: {
     default: "Blogify - Write, Share and Grow",
     template: "%s | Blogify",

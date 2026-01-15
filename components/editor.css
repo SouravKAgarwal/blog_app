@@ -77,12 +77,10 @@ div.github-theme code {
 
 #markdown-preview ul {
   list-style-type: disc !important;
-  padding-left: 20px !important;
 }
 
 #markdown-preview ol {
   list-style-type: decimal !important;
-  padding-left: 20px !important;
 }
 
 #markdown-preview li {
@@ -155,3 +153,50 @@ div.github-theme code {
   border-block-end: none !important;
   color: var(--color-primary) !important;
 }
+
+/* From globals.css */
+.md-editor {
+  margin-top: 0.75rem;
+  border-radius: 22px;
+  border: 3px solid #000000;
+  font-size: 18px;
+  color: #000000;
+  font-weight: 600;
+}
+
+.md-editor::placeholder {
+  color: #7d8087;
+}
+
+svg.md-editor-icon {
+  width: 20px !important;
+  height: 20px !important;
+}
+
+.md-editor-footer {
+  display: none !important;
+}
+
+.md-editor-toolbar-item > svg.lucide-github-icon,
+.md-editor-toolbar-item > svg.lucide-list-tree,
+.md-editor-toolbar-item > svg.lucide-code-xml {
+  display: none !important;
+}
+
+.md-editor-toolbar {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  padding: 10px !important;
+}
+
+.md-editor-toolbar-left {
+  display: flex !important;
+  flex-wrap: wrap !important;
+}
+
+div[title="catalog"],
+div[title="source code"],
+div[title="html preview"] {
+  display: none !important;
+}
+

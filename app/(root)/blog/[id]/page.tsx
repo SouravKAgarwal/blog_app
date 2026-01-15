@@ -6,15 +6,14 @@ import { notFound } from "next/navigation";
 import { cache, Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
-import ViewMarkdown from "@/components/ViewMarkdown";
 import { BlogCardType } from "../../page";
 import Image from "next/image";
+import ViewMarkdownWrapper from "@/components/ViewMarkdownWrapper";
 
-export const experimental_ppr = true;
-
-const fetchPostById = cache(async (id: string) => {
+async function fetchPostById(id: string) {
+  "use cache";
   return client.fetch(BLOG_BY_ID_QUERY, { id });
-});
+}
 
 export async function generateStaticParams() {
   const posts = await client.fetch(BLOGS);
@@ -108,10 +107,31 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           <div className="container max-w-4xl mx-auto px-4">
             {post.pitch ? (
-              <ViewMarkdown content={post.pitch} />
+              <Suspense fallback={<p>Loading content...</p>}>
+                <ViewMarkdownWrapper content={post.pitch} />
+              </Suspense>
             ) : (
               <p className="no-result">No details provided</p>
             )}
+            <script
+              type="application/ld+json"
+              dangerouslySetInnerHTML={{
+                __html: JSON.stringify({
+                  "@context": "https://schema.org",
+                  "@type": "BlogPosting",
+                  headline: post.title,
+                  datePublished: post._createdAt,
+                  dateModified: post._createdAt,
+                  description: post.description,
+                  image: post.image,
+                  author: {
+                    "@type": "Person",
+                    name: post.author?.name,
+                    url: `${process.env.NEXT_PUBLIC_URL}/user/${post.author?._id}`,
+                  },
+                }),
+              }}
+            />
           </div>
         </div>
 

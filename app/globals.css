@@ -1,7 +1,5 @@
 @import "tailwindcss";
-@import "./markdown-fix.css";
 @plugin "tailwindcss-animate";
-@plugin "@tailwindcss/typography";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
@@ -314,64 +312,4 @@
   .tag-tri {
     @apply before:content-[''] before:absolute before:top-2 before:left-2 before:border-t-[10px] before:border-t-black before:border-r-[10px] before:border-r-transparent after:content-[''] after:absolute after:bottom-2 after:right-2 after:border-b-[10px] after:border-b-black after:border-l-[10px] after:border-l-transparent;
   }
-}
-
-.md-editor {
-  @apply mt-3 rounded-[22px] border-[3px] border-black text-[18px] text-black font-semibold placeholder:text-black-300;
-}
-
-svg.md-editor-icon {
-  width: 20px !important;
-  height: 20px !important;
-}
-
-.md-editor-footer {
-  display: none !important;
-}
-
-.md-editor-toolbar-item > svg.lucide-github-icon,
-.md-editor-toolbar-item > svg.lucide-list-tree,
-.md-editor-toolbar-item > svg.lucide-code-xml {
-  display: none !important;
-}
-
-.md-editor-toolbar {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  padding: 10px !important;
-}
-
-.md-editor-toolbar-left {
-  display: flex !important;
-  flex-wrap: wrap !important;
-}
-
-div[title="catalog"],
-div[title="source code"],
-div[title="html preview"] {
-  display: none !important;
-}
-
-.prose > p > img {
-  display: block;
-  margin: 0 auto;
-  border-radius: 10px;
-}
-
-.prose > p:has(> img) {
-  text-align: center;
-}
-
-.prose
-  :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)):before,
-.prose
-  :where(code):not(:where([class~="not-prose"], [class~="not-prose"] *)):after {
-  content: "" !important;
-}
-
-.prose p > code,
-.prose li > code {
-  background-color: #d6d5d5 !important;
-  padding: 3px !important;
-  border-radius: 2px !important;
 }
