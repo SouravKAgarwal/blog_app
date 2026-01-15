@@ -104,20 +104,3 @@ export const PLAYLIST_BY_SLUG_QUERY =
     pitch
   }
 }`);
-
-export const POPULAR_BLOG_BY_VIEW_QUERY = defineQuery(`
-*[_type == "blog"] | order(views desc)[0...5] {
-  _id,
-  title,
-  _createdAt,
-  slug,
-  views,
-  author-> {
-    name,
-    image,
-    _id
-  },
-  description,
-  category,
-  image,
-}`);

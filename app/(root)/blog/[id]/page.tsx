@@ -106,11 +106,13 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             <p className="category-tag">{post.category}</p>
           </div>
 
-          {post.pitch ? (
-            <ViewMarkdown content={post.pitch} />
-          ) : (
-            <p className="no-result">No details provided</p>
-          )}
+          <div className="container max-w-4xl mx-auto px-4">
+            {post.pitch ? (
+              <ViewMarkdown content={post.pitch} />
+            ) : (
+              <p className="no-result">No details provided</p>
+            )}
+          </div>
         </div>
 
         <div className="max-w-4xl mx-auto px-4">

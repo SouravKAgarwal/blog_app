@@ -5,6 +5,8 @@ import { BLOG_QUERY } from "@/sanity/lib/queries";
 import { Blog, Author } from "@/sanity/types";
 import { cache } from "react";
 
+export const experimental_ppr = true;
+
 export type BlogCardType = Omit<Blog, "author"> & { author: Author };
 
 const fetchPosts = cache(async (query?: string) => {

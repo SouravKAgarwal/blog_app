@@ -1,50 +1,6 @@
 .markdown-layout {
-  display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 2.5rem;
-  max-width: 1400px;
   margin: 0 auto;
   padding: 1rem 0;
-}
-
-.toc-wrapper {
-  position: relative;
-}
-
-.markdown-toc {
-  max-height: calc(100vh - 120px);
-  overflow-y: auto;
-  font-size: 0.95rem;
-  padding-right: 10px;
-}
-
-.md-catalog-link span {
-  transition: all 0.2s ease;
-  padding: 4px 0;
-  display: block;
-}
-
-.md-catalog-link:hover span {
-  color: var(--color-primary) !important;
-  transform: translateX(4px) !important;
-}
-
-.md-editor-catalog-link:hover > span {
-  color: var(--color-primary) !important;
-}
-
-.md-editor-catalog-active > span {
-  color: var(--color-primary) !important;
-  font-weight: 600 !important;
-  transform: translateX(4px) !important;
-}
-
-.md-editor-catalog-indicator {
-  display: none !important;
-}
-
-.md-editor-preview .md-editor-code pre code {
-  font-size: 13px !important;
 }
 
 div.github-theme code {
@@ -103,18 +59,16 @@ div.github-theme code {
   background-color: #f6f8fa !important;
 }
 
-/* Ensure code inside pre matches */
 .md-editor-code pre code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
   font-size: 13px !important;
   line-height: 1.5 !important;
+  font-weight: 600 !important;
 }
 
 .md-preview h1,
 .md-preview h2,
 .md-preview h3 {
   scroll-margin-top: 90px;
-  font-weight: 600;
 }
 
 .md-preview p {
@@ -146,7 +100,6 @@ div.github-theme code {
 }
 
 .md-preview code {
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 0.9em;
 }
 
@@ -195,14 +148,10 @@ div.github-theme code {
   font-size: 12px !important;
   text-decoration: none !important;
   cursor: pointer !important;
-  font-family: ui-monospace, SFMono-Regular, Menlo, monospace !important;
-  color: #57606a !important;
-  font-weight: 500 !important;
-  padding: 4px 0 !important;
+  padding: 2px 0 !important;
 }
 
 .md-editor-codetab-label input:checked + label {
-  font-weight: 600 !important;
   border-block-end: none !important;
   color: var(--color-primary) !important;
 }
