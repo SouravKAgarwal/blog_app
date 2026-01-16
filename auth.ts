@@ -6,7 +6,49 @@ import { writeClient } from "./sanity/lib/write-client";
 import { JWT } from "next-auth/jwt";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  providers: [GitHub],
+  secret: process.env.AUTH_SECRET,
+  session: { strategy: "jwt" },
+  providers: [
+    GitHub({
+      clientId: process.env.AUTH_GITHUB_ID,
+      clientSecret: process.env.AUTH_GITHUB_SECRET,
+      authorization: {
+        params: {
+          scope: "read:user",
+          prompt: "consent",
+          access_type: "offline",
+        },
+      },
+    }),
+  ],
+  cookies: {
+    sessionToken: {
+      name: `__Secure-authjs.session-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+    callbackUrl: {
+      name: `__Secure-authjs.callback-url`,
+      options: {
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+    csrfToken: {
+      name: `__Secure-authjs.csrf-token`,
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: true,
+      },
+    },
+  },
   callbacks: {
     async signIn({ user, profile }: { user: User; profile?: any }) {
       if (!profile?.id) return false;
@@ -56,8 +98,16 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     },
 
     async session({ session, token }: { session: Session; token: JWT }) {
-      Object.assign(session, { id: token.id });
+      if (token?.id) {
+        Object.assign(session, { id: token.id });
+      }
       return session;
     },
+  },
+  pages: {
+    signIn: "/",
+    error: "/",
+    signOut: "/",
+    newUser: "/",
   },
 });

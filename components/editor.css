@@ -196,3 +196,15 @@ div[title="html preview"] {
   display: none !important;
 }
 
+.md-editor-preview figure,
+.md-editor figure {
+  margin: 0 1em !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 10px !important;
+}
+
+div.github-theme img {
+  max-width: 75% !important;
+  border-radius: 8px !important;
+}
