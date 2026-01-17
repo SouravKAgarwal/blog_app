@@ -108,55 +108,55 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
   });
 
   return (
-    <form action={formAction} className="startup-form">
+    <form action={formAction} className="blog-form">
       <div>
-        <label htmlFor="title" className="startup-form_label">
+        <label htmlFor="title" className="blog-form_label">
           Title
         </label>
         <Input
           id="title"
           name="title"
-          className="startup-form_input"
+          className="blog-form_input"
           placeholder="Blog Title"
           defaultValue={title}
         />
-        {errors.title && <p className="startup-form_error">{errors.title}</p>}
+        {errors.title && <p className="blog-form_error">{errors.title}</p>}
       </div>
 
       <div>
-        <label htmlFor="description" className="startup-form_label">
+        <label htmlFor="description" className="blog-form_label">
           Description
         </label>
         <Textarea
           id="description"
           name="description"
-          className="startup-form_textarea"
+          className="blog-form_textarea"
           placeholder="Blog Description"
           defaultValue={description}
         />
         {errors.description && (
-          <p className="startup-form_error">{errors.description}</p>
+          <p className="blog-form_error">{errors.description}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="category" className="startup-form_label">
+        <label htmlFor="category" className="blog-form_label">
           Category
         </label>
         <Input
           id="category"
           name="category"
-          className="startup-form_input"
+          className="blog-form_input"
           placeholder="Blog Category (Health, Travel, ...)"
           defaultValue={category}
         />
         {errors.category && (
-          <p className="startup-form_error">{errors.category}</p>
+          <p className="blog-form_error">{errors.category}</p>
         )}
       </div>
 
       <div className="flex flex-col gap-4">
-        <label htmlFor="link" className="startup-form_label">
+        <label htmlFor="link" className="blog-form_label">
           Upload Image
         </label>
         {!imageURL ? (
@@ -176,7 +176,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
               type="text"
               value={imageURL}
               onChange={(e) => setImageURL(e.target.value)}
-              className="startup-form_input"
+              className="blog-form_input"
               placeholder="Blog Image URL"
             />
             <Image
@@ -195,23 +195,23 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
             </button>
           </div>
         )}
-        {errors.link && <p className="startup-form_error">{errors.link}</p>}
+        {errors.link && <p className="blog-form_error">{errors.link}</p>}
       </div>
 
       <div data-color-mode="light">
-        <label htmlFor="Pitch" className="startup-form_label">
+        <label htmlFor="Pitch" className="blog-form_label">
           Pitch
         </label>
         <Editor
           text={editPitch}
           setText={(value: string) => setEditPitch(value)}
         />
-        {errors.pitch && <p className="startup-form_error">{errors.pitch}</p>}
+        {errors.pitch && <p className="blog-form_error">{errors.pitch}</p>}
       </div>
 
       <Button
         type="submit"
-        className="startup-form_btn text-white"
+        className="blog-form_btn text-white"
         disabled={isPending || isUploading}
       >
         {isPending ? "Updating..." : "Update Blog"}

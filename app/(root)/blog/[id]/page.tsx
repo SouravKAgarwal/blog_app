@@ -3,12 +3,13 @@ import { client } from "@/sanity/lib/client";
 import { BLOG_BY_ID_QUERY, BLOGS } from "@/sanity/lib/queries";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cache, Suspense } from "react";
+import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import View from "@/components/View";
 import { BlogCardType } from "../../page";
 import Image from "next/image";
 import ViewMarkdownWrapper from "@/components/ViewMarkdownWrapper";
+import ViewMarkdownSkeleton from "@/components/ViewMarkdownSkeleton";
 
 async function fetchPostById(id: string) {
   "use cache";
@@ -64,7 +65,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   if (!post) notFound();
 
   return (
-    <>
+    <article className="pb-10">
       <section className="pink_container min-h-57.5!">
         <p className="subtitle">{formatDate(post._createdAt)}</p>
         <h1 className="heading">{post.title}</h1>
@@ -107,7 +108,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
 
           <div className="container max-w-4xl mx-auto px-4">
             {post.pitch ? (
-              <Suspense fallback={<p>Loading content...</p>}>
+              <Suspense fallback={<ViewMarkdownSkeleton />}>
                 <ViewMarkdownWrapper content={post.pitch} />
               </Suspense>
             ) : (
@@ -141,7 +142,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           </Suspense>
         </div>
       </section>
-    </>
+    </article>
   );
 };
 

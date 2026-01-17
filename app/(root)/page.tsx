@@ -1,6 +1,6 @@
-import { UserCards } from "@/components/Cards";
+import { BlogCardSkeleton, UserCards } from "@/components/Cards";
 import SearchForm from "@/components/SearchForm";
-import { sanityFetch, SanityLive } from "@/sanity/lib/live";
+import { client } from "@/sanity/lib/client";
 import { BLOG_QUERY } from "@/sanity/lib/queries";
 import { Blog, Author } from "@/sanity/types";
 import { Suspense } from "react";
@@ -10,7 +10,7 @@ export type BlogCardType = Omit<Blog, "author"> & { author: Author };
 async function fetchPosts(query?: string) {
   "use cache";
   const params = { search: query || null };
-  const { data: posts } = await sanityFetch({ query: BLOG_QUERY, params });
+  const posts = await client.fetch(BLOG_QUERY, params);
 
   return posts;
 }
@@ -50,14 +50,16 @@ export default function Home({
       </section>
 
       <section className="section_container">
-        <Suspense fallback={<p>Loading results...</p>}>
+        <Suspense
+          fallback={
+            <ul className="mt-7 card_grid-sm">
+              <BlogCardSkeleton />
+            </ul>
+          }
+        >
           <SearchResults searchParams={searchParams} />
         </Suspense>
       </section>
-
-      <Suspense fallback={null}>
-        <SanityLive />
-      </Suspense>
     </>
   );
 }
@@ -87,7 +89,9 @@ async function SearchResults({
       <ul className="mt-7 card_grid-sm">
         {posts?.length ? (
           posts.map((post: BlogCardType) => (
-            <UserCards key={post._id} post={post} />
+            <li key={post._id} className="list-none">
+              <UserCards post={post} />
+            </li>
           ))
         ) : (
           <p>No blogs found</p>

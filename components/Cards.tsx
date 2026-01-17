@@ -25,7 +25,7 @@ export const UserCards = ({
   } = post;
 
   return (
-    <div className="blog-card group">
+    <article className="blog-card group">
       <div className="flex-between">
         <p className="blog-card_date">{formatDate(_createdAt)}</p>
 
@@ -82,7 +82,7 @@ export const UserCards = ({
           </Button>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 
@@ -90,7 +90,30 @@ export const BlogCardSkeleton = () => (
   <>
     {[0, 1, 2, 3, 4].map((i: number) => (
       <li key={cn("skeleton", i)}>
-        <Skeleton className="startup-card_skeleton" />
+        <div className="blog-card group h-full">
+          <div className="flex-between">
+            <Skeleton className="h-5 w-24 bg-zinc-200 rounded-full" />
+            <Skeleton className="size-6 bg-zinc-200 rounded-full" />
+          </div>
+          <div className="flex-between mt-5 gap-5">
+            <div className="flex-1">
+              <Skeleton className="h-6 w-3/4 bg-zinc-200 rounded-md mb-2" />
+              <Skeleton className="h-6 w-1/2 bg-zinc-200 rounded-md" />
+            </div>
+            <Skeleton className="size-8 bg-zinc-200 rounded-full" />
+          </div>
+
+          <div className="mt-5">
+            <Skeleton className="h-4 w-full bg-zinc-200 rounded-md mb-2" />
+            <Skeleton className="h-4 w-5/6 bg-zinc-200 rounded-md mb-4" />
+            <Skeleton className="w-full h-[120px] rounded-[10px] bg-zinc-200" />
+          </div>
+
+          <div className="flex-between gap-3 mt-5">
+            <Skeleton className="h-8 w-24 bg-zinc-200 rounded-full" />
+            <Skeleton className="size-10 bg-zinc-200 rounded-full" />
+          </div>
+        </div>
       </li>
     ))}
   </>
