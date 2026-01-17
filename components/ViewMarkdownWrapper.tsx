@@ -1,10 +1,8 @@
-"use client";
-
 import dynamic from "next/dynamic";
+import ViewMarkdownSkeleton from "@/components/ViewMarkdownSkeleton";
 
 const ViewMarkdown = dynamic(() => import("@/components/ViewMarkdown"), {
-  ssr: false,
-  loading: () => <p>Loading content...</p>,
+  loading: () => <ViewMarkdownSkeleton />,
 });
 
 const ViewMarkdownWrapper = ({ content }: { content: string }) => {

@@ -4,15 +4,25 @@ import { client } from "@/sanity/lib/client";
 import { BLOG_QUERY } from "@/sanity/lib/queries";
 import { Blog, Author } from "@/sanity/types";
 import { Suspense } from "react";
+import { generateBlurDataURL } from "@/lib/utils/image";
 
-export type BlogCardType = Omit<Blog, "author"> & { author: Author };
+export type BlogCardType = Omit<Blog, "author"> & { author: Author } & {
+  blurDataURL?: string;
+};
 
 async function fetchPosts(query?: string) {
   "use cache";
   const params = { search: query || null };
   const posts = await client.fetch(BLOG_QUERY, params);
 
-  return posts;
+  const postsWithBlur = await Promise.all(
+    posts.map(async (post: BlogCardType) => {
+      const blurDataURL = await generateBlurDataURL(post.image);
+      return { ...post, blurDataURL };
+    })
+  );
+
+  return postsWithBlur;
 }
 
 export async function generateMetadata({

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import Image from "next/image";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export const UserCards = ({
   post,
@@ -22,6 +23,7 @@ export const UserCards = ({
     _id,
     title,
     category,
+    blurDataURL,
   } = post;
 
   return (
@@ -42,13 +44,12 @@ export const UserCards = ({
         </div>
 
         <Link href={`/user/${author?._id}`}>
-          <Image
-            src={`${author?.image}`}
-            alt="avatar"
-            width={32}
-            height={32}
-            className="rounded-full"
-          />
+          <Avatar className="size-8">
+            <AvatarImage src={author?.image} alt={author?.name || "avatar"} />
+            <AvatarFallback>
+              {author?.name?.slice(0, 2).toUpperCase() || "CN"}
+            </AvatarFallback>
+          </Avatar>
         </Link>
       </div>
 
@@ -60,6 +61,9 @@ export const UserCards = ({
           width={400}
           height={200}
           className="blog-card_img"
+          placeholder={blurDataURL ? "blur" : undefined}
+          blurDataURL={blurDataURL}
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
       </Link>
 

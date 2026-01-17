@@ -10,6 +10,8 @@ import { BlogCardType } from "../../page";
 import Image from "next/image";
 import ViewMarkdownWrapper from "@/components/ViewMarkdownWrapper";
 import ViewMarkdownSkeleton from "@/components/ViewMarkdownSkeleton";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { generateBlurDataURL } from "@/lib/utils/image";
 
 async function fetchPostById(id: string) {
   "use cache";
@@ -61,6 +63,7 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const id = (await params).id;
 
   const post = await fetchPostById(id);
+  const blurDataURL = await generateBlurDataURL(post?.image);
 
   if (!post) notFound();
 
@@ -80,6 +83,8 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           height={500}
           className="w-full md:w-3/4 lg:w-2/3 rounded-2xl h-auto mx-auto object-cover border-4 border-white"
           priority
+          placeholder={blurDataURL ? "blur" : undefined}
+          blurDataURL={blurDataURL}
         />
         <div className="space-y-5 mt-10">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-5 max-w-3xl mx-auto mb-10">
@@ -87,13 +92,15 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               href={`/user/${post.author?._id}`}
               className="flex gap-3 items-center group"
             >
-              <Image
-                src={post.author?.image}
-                height={64}
-                width={64}
-                className="rounded-full drop-shadow-md group-hover:scale-105 transition-transform duration-300 ring-2 ring-transparent group-hover:ring-primary/50"
-                alt="avatar"
-              />
+              <Avatar className="size-16">
+                <AvatarImage
+                  src={post.author?.image}
+                  alt={post.author?.name || "avatar"}
+                />
+                <AvatarFallback>
+                  {post.author?.name?.slice(0, 2).toUpperCase() || "CN"}
+                </AvatarFallback>
+              </Avatar>
               <div>
                 <p className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
                   {post.author?.name}
