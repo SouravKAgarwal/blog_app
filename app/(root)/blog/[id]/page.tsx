@@ -10,7 +10,6 @@ import { BlogCardType } from "../../page";
 import Image from "next/image";
 import ViewMarkdownWrapper from "@/components/ViewMarkdownWrapper";
 import ViewMarkdownSkeleton from "@/components/ViewMarkdownSkeleton";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { generateBlurDataURL } from "@/lib/utils/image";
 
 async function fetchPostById(id: string) {
@@ -91,15 +90,20 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
               href={`/user/${post.author?._id}`}
               className="flex items-center gap-3 group"
             >
-              <Avatar className="size-12 border border-border group-hover:ring-2 group-hover:ring-ring transition-all">
-                <AvatarImage
-                  src={post.author?.image}
-                  alt={post.author?.name || "avatar"}
-                />
-                <AvatarFallback>
-                  {post.author?.name?.slice(0, 2).toUpperCase() || "CN"}
-                </AvatarFallback>
-              </Avatar>
+              <div className="size-12 overflow-hidden rounded-full border border-border group-hover:ring-2 group-hover:ring-ring transition-all relative bg-secondary flex items-center justify-center">
+                {post.author?.image ? (
+                  <Image
+                    src={post.author.image}
+                    alt={post.author.name || "User Avatar"}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <span className="text-secondary-foreground font-bold text-lg">
+                    {post.author?.name?.slice(0, 2).toUpperCase() || "CN"}
+                  </span>
+                )}
+              </div>
               <div className="text-left">
                 <p className="font-medium text-foreground group-hover:text-primary transition-colors">
                   {post.author?.name}

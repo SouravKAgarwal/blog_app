@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { BlogCardSkeleton } from "@/components/Cards";
+import UserTitleSkeleton from "@/components/UserTitleSkeleton";
 import UserBlogs from "@/components/UserBlogs";
 import { client } from "@/sanity/lib/client";
 import { AUTHORS } from "@/sanity/lib/queries";
@@ -113,7 +114,7 @@ const UserPage = async ({
 
       <div className="flex-1 flex flex-col gap-8">
         <div className="flex items-center justify-between border-b border-border pb-4">
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<UserTitleSkeleton />}>
             <BlogTitle id={id} user={user} />
           </Suspense>
         </div>

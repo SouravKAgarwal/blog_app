@@ -1,15 +1,12 @@
 {
   "name": "blogify",
-  "version": "1.1.0",
+  "version": "2.1.1",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "predev": "pnpm run typegen",
-    "prebuild": "pnpm run typegen",
-    "typegen": "sanity schema extract --path=./sanity/extract.json && sanity typegen generate"
+    "lint": "next lint"
   },
   "packageManager": "pnpm@10.26.2",
   "dependencies": {

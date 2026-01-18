@@ -1,16 +1,17 @@
 import { BlogCardSkeleton, UserCards } from "@/components/Cards";
 import SearchForm from "@/components/SearchForm";
+import SearchFormSkeleton from "@/components/SearchFormSkeleton";
 import { client } from "@/sanity/lib/client";
 import { BLOG_QUERY } from "@/sanity/lib/queries";
 import { Blog, Author } from "@/sanity/types";
 import { Suspense } from "react";
 import { generateBlurDataURL } from "@/lib/utils/image";
+import Pagination from "@/components/Pagination";
 
 export type BlogCardType = Omit<Blog, "author"> & { author: Author } & {
   blurDataURL?: string;
 };
 
-import Pagination from "@/components/Pagination";
 
 async function fetchPosts(query?: string, page: number = 1) {
   "use cache";
@@ -72,7 +73,7 @@ export default function Home({
         </div>
 
         <div className="w-full max-w-2xl mt-8">
-          <Suspense>
+          <Suspense fallback={<SearchFormSkeleton />}>
             <SearchFormWrapper searchParams={searchParams} />
           </Suspense>
         </div>
@@ -82,8 +83,6 @@ export default function Home({
         <Suspense
           fallback={
             <ul className="mt-7 card_grid">
-              <BlogCardSkeleton />
-              <BlogCardSkeleton />
               <BlogCardSkeleton />
             </ul>
           }
@@ -115,7 +114,7 @@ async function SearchResults({
 
   return (
     <>
-      <h2 className="text-30-semibold">
+      <h2 className="text-3xl font-semibold">
         {query ? `Search results for "${query}"` : "All Blogs"}
       </h2>
       <ul className="mt-7 card_grid-sm">

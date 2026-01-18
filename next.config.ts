@@ -11,7 +11,7 @@ const nextConfig: NextConfig = {
   },
   cacheComponents: true,
   experimental: {
-    optimizePackageImports: ["lucide-react", "react-icons"],
+    optimizePackageImports: ["lucide-react"],
     inlineCss: true,
   },
 };

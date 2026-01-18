@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Button } from "./ui/button";
 import { Skeleton } from "./ui/skeleton";
 import Image from "next/image";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 export const UserCards = ({
   post,
@@ -78,12 +77,20 @@ export const UserCards = ({
             href={`/user/${author?._id}`}
             className="flex items-center gap-3 group/author z-20"
           >
-            <Avatar className="size-8 border border-border group-hover/author:border-primary/50 transition-colors">
-              <AvatarImage src={author?.image} alt={author?.name || "avatar"} />
-              <AvatarFallback>
-                {author?.name?.slice(0, 2).toUpperCase() || "CN"}
-              </AvatarFallback>
-            </Avatar>
+            <div className="size-8 overflow-hidden rounded-full border border-border group-hover/author:border-primary/50 transition-colors relative bg-secondary flex items-center justify-center">
+              {author?.image ? (
+                <Image
+                  src={author.image}
+                  alt={author.name || "User Avatar"}
+                  fill
+                  className="object-cover"
+                />
+              ) : (
+                <span className="text-secondary-foreground text-xs font-bold">
+                  {author?.name?.slice(0, 2).toUpperCase() || "CN"}
+                </span>
+              )}
+            </div>
             <span className="text-xs font-semibold line-clamp-1 text-muted-foreground group-hover/author:text-foreground transition-colors">
               {author?.name}
             </span>
@@ -129,7 +136,7 @@ export const UserCards = ({
 
 export const BlogCardSkeleton = () => (
   <>
-    {[0, 1, 2, 3, 4].map((i: number) => (
+    {[0, 1, 2, 3, 4, 5].map((i: number) => (
       <li key={cn("skeleton", i)}>
         <div className="flex flex-col h-full overflow-hidden rounded-xl border border-border bg-card">
           <Skeleton className="w-full aspect-16/10 rounded-none bg-secondary" />

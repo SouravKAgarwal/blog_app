@@ -1,8 +1,7 @@
 import { auth, signIn, signOut } from "@/auth";
-import { BadgePlus, LogOut, Pen, PenTool } from "lucide-react";
+import { BadgePlus, LogOut, Pen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
 
 const Navbar = async () => {
@@ -75,15 +74,20 @@ const Navbar = async () => {
               </form>
 
               <Link href={`/user/${session?.id}`}>
-                <Avatar className="size-10 border border-border hover:ring-2 hover:ring-primary/50 transition-all shadow-sm cursor-pointer">
-                  <AvatarImage
-                    src={session?.user?.image || ""}
-                    alt={session?.user?.name || ""}
-                  />
-                  <AvatarFallback className="bg-secondary text-secondary-foreground font-bold">
-                    {session?.user?.name?.slice(0, 2).toUpperCase() || "CN"}
-                  </AvatarFallback>
-                </Avatar>
+                <div className="size-10 overflow-hidden rounded-full border border-border hover:ring-2 hover:ring-primary/50 transition-all shadow-sm cursor-pointer relative bg-secondary flex items-center justify-center">
+                  {session?.user?.image ? (
+                    <Image
+                      src={session?.user?.image}
+                      alt={session?.user?.name || "User Avatar"}
+                      fill
+                      className="object-cover"
+                    />
+                  ) : (
+                    <span className="text-secondary-foreground font-bold">
+                      {session?.user?.name?.slice(0, 2).toUpperCase() || "CN"}
+                    </span>
+                  )}
+                </div>
               </Link>
             </>
           ) : (
