@@ -1,21 +1,18 @@
-import localFont from "next/font/local";
 import "./globals.css";
+import { Inter, Playfair_Display } from "next/font/google";
 import { Toaster } from "@/components/ui/toaster";
 import { Metadata } from "next";
 
-const workSans = localFont({
-  src: [
-    { path: "./fonts/WorkSans-Black.ttf", weight: "900", style: "normal" },
-    { path: "./fonts/WorkSans-ExtraBold.ttf", weight: "800", style: "normal" },
-    { path: "./fonts/WorkSans-Bold.ttf", weight: "700", style: "normal" },
-    { path: "./fonts/WorkSans-SemiBold.ttf", weight: "600", style: "normal" },
-    { path: "./fonts/WorkSans-Medium.ttf", weight: "500", style: "normal" },
-    { path: "./fonts/WorkSans-Regular.ttf", weight: "400", style: "normal" },
-    { path: "./fonts/WorkSans-Light.ttf", weight: "300", style: "normal" },
-    { path: "./fonts/WorkSans-ExtraLight.ttf", weight: "200", style: "normal" },
-    { path: "./fonts/WorkSans-Thin.ttf", weight: "100", style: "normal" },
-  ],
-  variable: "--font-work-sans",
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -24,20 +21,17 @@ export const metadata: Metadata = {
     default: "Blogify - Write, Share and Grow",
     template: "%s | Blogify",
   },
+  description: "A modern, sophisticated platform to share your thoughts.",
   openGraph: {
     images: [
       {
-        url: "https://blogapp-09.vercel.app/opengraph.png",
+        url: "/opengraph.png",
         width: 1200,
         height: 630,
         alt: "Blogify",
       },
     ],
-    siteName: "Blogify - Write, Share and Grow",
-  },
-  twitter: {
-    card: "summary_large_image",
-    images: ["https://blogapp-09.vercel.app/opengraph.png"],
+    siteName: "Blogify",
   },
 };
 
@@ -48,7 +42,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={workSans.variable}>
+      <body
+        className={`${inter.variable} ${playfair.variable} bg-background antialiased overflow-auto font-sans text-foreground`}
+      >
         {children}
         <Toaster />
       </body>

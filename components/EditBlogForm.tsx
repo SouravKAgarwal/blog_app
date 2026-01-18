@@ -50,7 +50,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
 
   const handleFormSubmit = async (
     prevState: Record<string, unknown>,
-    formData: FormData
+    formData: FormData,
   ) => {
     try {
       const formValues = {
@@ -110,28 +110,34 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
   return (
     <form action={formAction} className="blog-form">
       <div>
-        <label htmlFor="title" className="blog-form_label">
+        <label
+          htmlFor="title"
+          className="font-serif text-xl font-bold text-foreground"
+        >
           Title
         </label>
         <Input
           id="title"
           name="title"
           className="blog-form_input"
-          placeholder="Blog Title"
+          placeholder="What's your story about?"
           defaultValue={title}
         />
         {errors.title && <p className="blog-form_error">{errors.title}</p>}
       </div>
 
       <div>
-        <label htmlFor="description" className="blog-form_label">
+        <label
+          htmlFor="description"
+          className="font-serif text-xl font-bold text-foreground"
+        >
           Description
         </label>
         <Textarea
           id="description"
           name="description"
           className="blog-form_textarea"
-          placeholder="Blog Description"
+          placeholder="Briefly describe your idea..."
           defaultValue={description}
         />
         {errors.description && (
@@ -140,14 +146,17 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
       </div>
 
       <div>
-        <label htmlFor="category" className="blog-form_label">
+        <label
+          htmlFor="category"
+          className="font-serif text-xl font-bold text-foreground"
+        >
           Category
         </label>
         <Input
           id="category"
           name="category"
           className="blog-form_input"
-          placeholder="Blog Category (Health, Travel, ...)"
+          placeholder="e.g. Technology, Lifestyle, Education"
           defaultValue={category}
         />
         {errors.category && (
@@ -156,7 +165,10 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
       </div>
 
       <div className="flex flex-col gap-4">
-        <label htmlFor="link" className="blog-form_label">
+        <label
+          htmlFor="link"
+          className="font-serif text-xl font-bold text-foreground"
+        >
           Upload Image
         </label>
         {!imageURL ? (
@@ -189,7 +201,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
             <button
               type="button"
               onClick={handleImageDelete}
-              className="absolute bottom-4 right-2 bg-primary text-white p-1 rounded-full hover:bg-red-600"
+              className="absolute bottom-4 right-2 text-black/50 bg-foreground p-1 rounded-full hover:bg-red-600"
             >
               <Trash size={20} />
             </button>
@@ -199,8 +211,11 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
       </div>
 
       <div data-color-mode="light">
-        <label htmlFor="Pitch" className="blog-form_label">
-          Pitch
+        <label
+          htmlFor="Pitch"
+          className="font-serif text-xl font-bold text-foreground"
+        >
+          Story
         </label>
         <Editor
           text={editPitch}

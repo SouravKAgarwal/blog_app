@@ -68,31 +68,30 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   if (!post) notFound();
 
   return (
-    <article className="pb-10">
-      <section className="pink_container min-h-57.5!">
-        <p className="subtitle">{formatDate(post._createdAt)}</p>
-        <h1 className="heading">{post.title}</h1>
-        <p className="sub-heading max-w-5xl!">{post.description}</p>
-      </section>
+    <article className="pb-20">
+      <section className="bg-background relative pt-20 pb-12 px-6">
+        <div className="max-w-3xl mx-auto text-center space-y-6">
+          <div className="flex items-center justify-center gap-4 text-sm text-muted-foreground font-medium">
+            <span className="bg-secondary px-3 py-1 rounded-full text-secondary-foreground uppercase tracking-wider text-xs">
+              {post.category}
+            </span>
+            <span>{formatDate(post._createdAt)}</span>
+          </div>
 
-      <section className="section_container">
-        <Image
-          src={post.image}
-          alt={post.title}
-          width={800}
-          height={500}
-          className="w-full md:w-3/4 lg:w-2/3 rounded-2xl h-auto mx-auto object-cover border-4 border-white"
-          priority
-          placeholder={blurDataURL ? "blur" : undefined}
-          blurDataURL={blurDataURL}
-        />
-        <div className="space-y-5 mt-10">
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-5 max-w-3xl mx-auto mb-10">
+          <h1 className="font-serif text-4xl md:text-6xl leading-tight font-bold text-foreground">
+            {post.title}
+          </h1>
+
+          <p className="text-xl md:text-2xl text-muted-foreground font-serif italic leading-relaxed">
+            {post.description}
+          </p>
+
+          <div className="flex items-center justify-center gap-4 pt-4">
             <Link
               href={`/user/${post.author?._id}`}
-              className="flex gap-3 items-center group"
+              className="flex items-center gap-3 group"
             >
-              <Avatar className="size-16">
+              <Avatar className="size-12 border border-border group-hover:ring-2 group-hover:ring-ring transition-all">
                 <AvatarImage
                   src={post.author?.image}
                   alt={post.author?.name || "avatar"}
@@ -101,53 +100,73 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                   {post.author?.name?.slice(0, 2).toUpperCase() || "CN"}
                 </AvatarFallback>
               </Avatar>
-              <div>
-                <p className="text-xl font-bold text-gray-900 group-hover:text-primary transition-colors">
+              <div className="text-left">
+                <p className="font-medium text-foreground group-hover:text-primary transition-colors">
                   {post.author?.name}
                 </p>
-                <p className="text-sm font-medium text-gray-500">
+                <p className="text-sm text-muted-foreground">
                   @{post.author?.username}
                 </p>
               </div>
             </Link>
-            <p className="category-tag">{post.category}</p>
-          </div>
-
-          <div className="container max-w-4xl mx-auto px-4">
-            {post.pitch ? (
-              <Suspense fallback={<ViewMarkdownSkeleton />}>
-                <ViewMarkdownWrapper content={post.pitch} />
-              </Suspense>
-            ) : (
-              <p className="no-result">No details provided</p>
-            )}
-            <script
-              type="application/ld+json"
-              dangerouslySetInnerHTML={{
-                __html: JSON.stringify({
-                  "@context": "https://schema.org",
-                  "@type": "BlogPosting",
-                  headline: post.title,
-                  datePublished: post._createdAt,
-                  dateModified: post._createdAt,
-                  description: post.description,
-                  image: post.image,
-                  author: {
-                    "@type": "Person",
-                    name: post.author?.name,
-                    url: `${process.env.NEXT_PUBLIC_URL}/user/${post.author?._id}`,
-                  },
-                }),
-              }}
-            />
           </div>
         </div>
+      </section>
 
-        <div className="max-w-4xl mx-auto px-4">
+      <section className="max-w-4xl mx-auto px-6 mb-16">
+        <div className="relative aspect-video w-full overflow-hidden rounded-xl shadow-lg border border-border/50">
+          <Image
+            src={post.image}
+            alt={post.title}
+            fill
+            className="object-cover"
+            priority
+            placeholder={blurDataURL ? "blur" : undefined}
+            blurDataURL={blurDataURL}
+          />
+        </div>
+      </section>
+
+      <section className="max-w-3xl mx-auto px-6">
+        <div className="prose prose-lg dark:prose-invert prose-headings:font-serif prose-headings:font-bold prose-p:text-muted-foreground prose-a:text-primary hover:prose-a:underline focus:prose-a:outline-none">
+          {post.pitch ? (
+            <Suspense fallback={<ViewMarkdownSkeleton />}>
+              <ViewMarkdownWrapper content={post.pitch} />
+            </Suspense>
+          ) : (
+            <div className="text-center py-20 bg-secondary/30 rounded-xl">
+              <p className="text-muted-foreground font-serif italic">
+                No details provided for this story.
+              </p>
+            </div>
+          )}
+        </div>
+
+        <div className="mt-16 pt-8 border-t border-border">
           <Suspense fallback={<Skeleton className="view_skeleton" />}>
             <View id={id} />
           </Suspense>
         </div>
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "BlogPosting",
+              headline: post.title,
+              datePublished: post._createdAt,
+              dateModified: post._createdAt,
+              description: post.description,
+              image: post.image,
+              author: {
+                "@type": "Person",
+                name: post.author?.name,
+                url: `${process.env.NEXT_PUBLIC_URL}/user/${post.author?._id}`,
+              },
+            }),
+          }}
+        />
       </section>
     </article>
   );

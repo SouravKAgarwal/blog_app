@@ -19,12 +19,21 @@ async function fetchPost(id: string) {
 const EditPage = ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <>
-      <section className="pink_container min-h-[230px]!">
-        <h1 className="heading">Edit your blog</h1>
+      <section className="w-full py-12 px-6 text-center">
+        <h1 className="font-serif text-4xl font-bold leading-tight tracking-tight text-foreground md:text-5xl">
+          Refining your story
+        </h1>
+        <p className="mt-4 text-muted-foreground max-w-lg mx-auto">
+          Make your work shine. Update your content and keep it fresh.
+        </p>
       </section>
 
       <Suspense
-        fallback={<p className="text-center mt-10">Loading editor...</p>}
+        fallback={
+          <p className="text-center mt-10 text-muted-foreground">
+            Loading editor...
+          </p>
+        }
       >
         <ProtectedEditForm params={params} />
       </Suspense>

@@ -48,7 +48,7 @@ const BlogForm = () => {
 
   const handleFormSubmit = async (
     prevState: Record<string, unknown>,
-    formData: FormData
+    formData: FormData,
   ) => {
     try {
       const formValues = {
@@ -109,66 +109,93 @@ const BlogForm = () => {
   return (
     <form action={formAction} className="blog-form">
       <div>
-        <label htmlFor="title" className="blog-form_label">
+        <label
+          htmlFor="title"
+          className="font-serif text-xl font-bold text-foreground"
+        >
           Title
         </label>
         <Input
           id="title"
           name="title"
-          className="blog-form_input"
-          placeholder="Blog Title"
+          className="h-12 text-lg font-medium"
+          placeholder="What's your story about?"
         />
-        {errors.title && <p className="blog-form_error">{errors.title}</p>}
+        {errors.title && (
+          <p className="text-destructive text-sm mt-1">{errors.title}</p>
+        )}
       </div>
 
-      <div>
-        <label htmlFor="description" className="blog-form_label">
+      <div className="space-y-2">
+        <label
+          htmlFor="description"
+          className="font-serif text-xl font-bold text-foreground"
+        >
           Description
         </label>
         <Textarea
           id="description"
           name="description"
-          className="blog-form_textarea"
-          placeholder="Blog Description"
+          className="min-h-[120px] text-base resize-none"
+          placeholder="Briefly describe your idea..."
         />
         {errors.description && (
-          <p className="blog-form_error">{errors.description}</p>
+          <p className="text-destructive text-sm mt-1">{errors.description}</p>
         )}
       </div>
 
-      <div>
-        <label htmlFor="category" className="blog-form_label">
+      <div className="space-y-2">
+        <label
+          htmlFor="category"
+          className="font-serif text-xl font-bold text-foreground"
+        >
           Category
         </label>
         <Input
           id="category"
           name="category"
-          className="blog-form_input"
-          placeholder="Blog Category (Health, Travel, ...)"
+          className="h-12 text-base"
+          placeholder="e.g. Technology, Lifestyle, Education"
         />
         {errors.category && (
-          <p className="blog-form_error">{errors.category}</p>
+          <p className="text-destructive text-sm mt-1">{errors.category}</p>
         )}
       </div>
 
-      <div className="flex flex-col gap-4">
-        <label htmlFor="link" className="blog-form_label">
-          Upload Image
+      <div className="space-y-3">
+        <label
+          htmlFor="link"
+          className="font-serif text-xl font-bold text-foreground"
+        >
+          Cover Image
         </label>
         {!imageURL ? (
-          <div className="flex items-center justify-center w-full">
+          <div className="group relative border-2 border-dashed border-muted-foreground/25 hover:border-primary/50 transition-colors rounded-xl p-8 text-center cursor-pointer bg-secondary/30 hover:bg-secondary/50">
             <label
               htmlFor="link"
-              className="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 border-gray-300 hover:border-primary transition-all duration-300"
+              className="cursor-pointer flex flex-col items-center justify-center w-full h-full"
             >
-              <div className="flex flex-col items-center justify-center pt-5 pb-6">
-                <p className="mb-2 text-sm text-gray-500 font-semibold">
-                  Click to upload
-                </p>
-                <p className="text-xs text-gray-500">
-                  SVG, PNG, JPG or GIF (MAX. 800x400px)
-                </p>
+              <div className="p-4 bg-background rounded-full shadow-sm mb-4 group-hover:scale-110 transition-transform">
+                <svg
+                  className="w-6 h-6 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+                  ></path>
+                </svg>
               </div>
+              <p className="text-sm font-medium text-foreground">
+                Click to upload cover image
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">
+                SVG, PNG, JPG (max 800x400px)
+              </p>
               <input
                 id="link"
                 name="link"
@@ -180,52 +207,58 @@ const BlogForm = () => {
             </label>
           </div>
         ) : (
-          <>
+          <div className="relative rounded-xl overflow-hidden border border-border group">
             <Input
               id="link"
               name="link"
-              type="text"
-              defaultValue={imageURL}
-              className="blog-form_input"
-              placeholder="Blog Image URL"
+              type="hidden"
+              value={imageURL}
+              onChange={(e) => setImageURL(e.target.value)}
             />
-            <div className="relative group">
-              <Image
-                src={imageURL}
-                alt="post_image"
-                width={1440}
-                height={1440}
-                className="rounded-xl w-full max-h-[400px] object-cover shadow-md"
-              />
-              <button
-                type="button"
-                onClick={handleImageDelete}
-                className="absolute top-4 right-4 bg-red-500 text-white p-2 rounded-full hover:bg-red-600 transition-colors shadow-lg opacity-0 group-hover:opacity-100"
-              >
-                <Trash size={20} />
-              </button>
-            </div>
-          </>
+            <Image
+              src={imageURL}
+              alt="post_image"
+              width={800}
+              height={400}
+              className="w-full h-[300px] object-cover"
+            />
+            <button
+              type="button"
+              onClick={handleImageDelete}
+              className="absolute top-4 right-4 bg-destructive/90 text-white p-2 rounded-full hover:bg-destructive transition-all shadow-md opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0"
+            >
+              <Trash size={18} />
+            </button>
+          </div>
         )}
-        {errors.link && <p className="blog-form_error">{errors.link}</p>}
+        {errors.link && (
+          <p className="text-destructive text-sm mt-1">{errors.link}</p>
+        )}
       </div>
 
-      <div data-color-mode="light">
-        <label htmlFor="Pitch" className="blog-form_label mb-4 block">
-          Content
+      <div data-color-mode="dark" className="space-y-2">
+        <label
+          htmlFor="Pitch"
+          className="font-serif text-xl font-bold text-foreground block"
+        >
+          Story
         </label>
 
-        <Editor text={pitch} setText={(value: string) => setPitch(value)} />
-        {errors.pitch && <p className="blog-form_error">{errors.pitch}</p>}
+        <div className="rounded-lg">
+          <Editor text={pitch} setText={(value: string) => setPitch(value)} />
+        </div>
+        {errors.pitch && (
+          <p className="text-destructive text-sm mt-1">{errors.pitch}</p>
+        )}
       </div>
 
       <Button
         type="submit"
-        className="blog-form_btn text-white w-full h-14 text-lg font-bold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+        className="w-full h-12 text-lg font-bold shadow-md hover:shadow-lg transition-all"
         disabled={isPending || isUploading}
       >
-        {isPending ? "Submitting..." : "Submit your blog"}
-        <Send className="ml-2 size-6" />
+        {isPending ? "Submitting..." : "Publish Story"}
+        <Send className="ml-2 size-5" />
       </Button>
     </form>
   );

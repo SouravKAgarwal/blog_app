@@ -95,7 +95,7 @@ const MdEditor = dynamic(
   {
     ssr: false,
     loading: () => <p>Loading Editor...</p>,
-  }
+  },
 );
 
 const Editor = ({
@@ -107,7 +107,7 @@ const Editor = ({
 }) => {
   const onUploadImg = async (
     files: File[],
-    callback: (urls: string[]) => void
+    callback: (urls: string[]) => void,
   ) => {
     const res = await Promise.all(
       files.map((file) => {
@@ -119,21 +119,28 @@ const Editor = ({
             reject(error);
           }
         });
-      })
+      }),
     );
 
     callback(res.map((item) => item));
   };
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-3xl">
       <MdEditor
         value={text}
         onChange={setText}
         language="en-US"
         previewTheme="github"
         codeTheme="github"
-        toolbarsExclude={["github", "htmlPreview", "catalog"]}
+        theme="dark"
+        toolbarsExclude={[
+          "github",
+          "htmlPreview",
+          "catalog",
+          "fullscreen",
+          "save",
+        ]}
         onUploadImg={onUploadImg}
       />
     </div>

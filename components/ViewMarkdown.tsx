@@ -21,6 +21,8 @@ const ViewMarkdown = ({ content }: ViewMarkdownProps) => {
           language="en-US"
           previewTheme="github"
           codeTheme="github"
+          theme="dark"
+          style={{ background: "transparent" }}
           codeFoldable={false}
           showCodeRowNumber
         />

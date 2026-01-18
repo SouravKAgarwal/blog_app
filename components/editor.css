@@ -5,17 +5,14 @@
 
 div.github-theme code {
   font-size: 0.85em !important;
-}
-
-.markdown-content {
-  width: 100%;
-  max-width: 100%;
+  color: var(--color-foreground) !important;
 }
 
 .md-preview {
   font-size: 18px;
   line-height: 1.8;
-  color: #333;
+  color: var(--color-foreground) !important;
+  background-color: transparent !important;
 }
 
 .md-editor-code-head {
@@ -24,11 +21,12 @@ div.github-theme code {
   justify-content: space-between !important;
   height: 40px !important;
   padding: 0 12px !important;
-  background-color: #f6f8fa !important;
+  background-color: var(--color-muted) !important;
   border-top-left-radius: 8px !important;
   border-top-right-radius: 8px !important;
-  border: 1px solid #d0d7de !important;
+  border: 1px solid var(--color-border) !important;
   margin-bottom: 0 !important;
+  color: var(--color-foreground) !important;
 }
 
 .md-editor-code-action {
@@ -45,34 +43,63 @@ div.github-theme code {
   height: 100% !important;
 }
 
+.md-editor-code {
+  width: 100% !important;
+  margin-top: 0 !important;
+}
+
 .md-editor-code-flag span {
   margin-block-start: 0px !important;
+  color: var(--color-muted-foreground) !important;
 }
 
 .md-editor-code pre {
   margin-top: 0 !important;
   border-top-left-radius: 0 !important;
   border-top-right-radius: 0 !important;
-  border: 1px solid #d0d7de !important;
+  border: 1px solid var(--color-border) !important;
   border-bottom-left-radius: 8px !important;
   border-bottom-right-radius: 8px !important;
-  background-color: #f6f8fa !important;
+  background-color: var(--color-card) !important;
+  color: var(--color-foreground) !important;
 }
 
 .md-editor-code pre code {
   font-size: 13px !important;
   line-height: 1.5 !important;
-  font-weight: 600 !important;
+  font-weight: 500 !important;
+  font-family: var(--font-mono, monospace) !important;
 }
 
 .md-preview h1,
 .md-preview h2,
-.md-preview h3 {
+.md-preview h3,
+.md-preview h4 {
+  color: var(--color-foreground) !important;
   scroll-margin-top: 90px;
+  font-family: var(--font-serif) !important;
+  font-weight: 700 !important;
 }
 
 .md-preview p {
   margin: 1rem 0;
+  color: var(--color-muted-foreground);
+}
+
+.md-preview a {
+  color: var(--color-foreground);
+  text-decoration: underline;
+  text-decoration-color: var(--color-muted-foreground);
+}
+.md-preview a:hover {
+  color: var(--color-primary);
+  text-decoration-color: var(--color-primary);
+}
+
+.md-preview ul,
+.md-preview ol {
+  padding-left: 1.5rem;
+  color: var(--color-muted-foreground);
 }
 
 #markdown-preview ul {
@@ -85,12 +112,15 @@ div.github-theme code {
 
 #markdown-preview li {
   display: list-item !important;
+  margin-bottom: 0.5rem;
 }
 
 .md-preview pre {
   border-radius: 8px;
   padding: 1rem;
   overflow-x: auto;
+  background-color: var(--color-card) !important;
+  border: 1px solid var(--color-border);
 }
 
 .md-editor-codetab-label {
@@ -99,6 +129,7 @@ div.github-theme code {
 
 .md-preview code {
   font-size: 0.9em;
+  font-family: var(--font-mono, monospace);
 }
 
 .md-preview,
@@ -147,35 +178,40 @@ div.github-theme code {
   text-decoration: none !important;
   cursor: pointer !important;
   padding: 2px 0 !important;
+  color: var(--color-muted-foreground) !important;
 }
 
 .md-editor-codetab-label input:checked + label {
   border-block-end: none !important;
-  color: var(--color-primary) !important;
-}
-.md-editor {
-  margin-top: 0.75rem;
-  font-size: 18px;
-  color: #000000;
-  font-weight: 600;
+  color: var(--color-foreground) !important;
 }
 
 .md-editor::placeholder {
-  color: #7d8087;
+  color: var(--color-muted-foreground) !important;
 }
 
 svg.md-editor-icon {
   width: 20px !important;
   height: 20px !important;
+  color: var(--color-foreground) !important;
+}
+
+.md-editor-toolbar-item {
+  color: var(--color-muted-foreground) !important;
+  transition: color 0.2s ease;
+}
+
+.md-editor-toolbar-item:hover {
+  background-color: var(--color-secondary) !important;
+  color: var(--color-foreground) !important;
+  border-radius: 4px;
+}
+
+.md-editor-toolbar-item:hover svg.md-editor-icon {
+  color: var(--color-foreground) !important;
 }
 
 .md-editor-footer {
-  display: none !important;
-}
-
-.md-editor-toolbar-item > svg.lucide-github-icon,
-.md-editor-toolbar-item > svg.lucide-list-tree,
-.md-editor-toolbar-item > svg.lucide-code-xml {
   display: none !important;
 }
 
@@ -183,17 +219,13 @@ svg.md-editor-icon {
   display: flex !important;
   flex-wrap: wrap !important;
   padding: 10px !important;
+  background-color: var(--color-muted) !important;
+  border-radius: 8px;
 }
 
 .md-editor-toolbar-left {
   display: flex !important;
   flex-wrap: wrap !important;
-}
-
-div[title="catalog"],
-div[title="source code"],
-div[title="html preview"] {
-  display: none !important;
 }
 
 .md-editor-preview figure,
@@ -205,6 +237,6 @@ div[title="html preview"] {
 }
 
 div.github-theme img {
-  max-width: 75% !important;
+  max-width: 100% !important;
   border-radius: 8px !important;
 }
