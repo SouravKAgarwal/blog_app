@@ -134,12 +134,36 @@ const Editor = ({
         previewTheme="github"
         codeTheme="github"
         theme="dark"
-        toolbarsExclude={[
-          "github",
-          "htmlPreview",
-          "catalog",
-          "fullscreen",
-          "save",
+        toolbars={[
+          "revoke",
+          "next",
+          "-",
+          "title",
+          "bold",
+          "underline",
+          "italic",
+          "strikeThrough",
+          "quote",
+          "-",
+          "unorderedList",
+          "orderedList",
+          "task",
+          "-",
+          "sub",
+          "sup",
+          "-",
+          "codeRow",
+          "code",
+          "-",
+          "link",
+          "image",
+          "table",
+          "mermaid",
+          "katex",
+          "-",
+          "prettier",
+          "pageFullscreen",
+          "preview",
         ]}
         onUploadImg={onUploadImg}
       />

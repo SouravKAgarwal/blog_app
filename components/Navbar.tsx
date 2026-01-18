@@ -1,12 +1,10 @@
-import { auth, signIn, signOut } from "@/auth";
-import { BadgePlus, LogOut, Pen } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "./ui/button";
+import { Suspense } from "react";
+import NavbarUser from "./NavbarUser";
+import NavbarUserSkeleton from "./NavbarUserSkeleton";
 
-const Navbar = async () => {
-  const session = await auth();
-
+const Navbar = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/80 backdrop-blur-md px-6 py-4 transition-all duration-300">
       <nav className="flex justify-between items-center max-w-7xl mx-auto">
@@ -18,6 +16,9 @@ const Navbar = async () => {
               width={28}
               height={28}
               className="object-contain group-hover:rotate-12 transition-transform duration-500"
+              loading="eager"
+              preload
+              fetchPriority="high"
             />
           </div>
           <span className="font-serif text-2xl font-bold tracking-tight text-foreground group-hover:text-primary transition-colors">
@@ -25,87 +26,9 @@ const Navbar = async () => {
           </span>
         </Link>
 
-        <div className="flex items-center gap-1.5">
-          {session && session?.user ? (
-            <>
-              <Button
-                asChild
-                variant="default"
-                className="hidden sm:flex items-center gap-2 rounded-full font-bold bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-all shadow-sm px-5 h-10"
-              >
-                <Link href="/blog/create">
-                  <Pen className="size-4" />
-                  <span>Write</span>
-                </Link>
-              </Button>
-              <Button
-                asChild
-                size="icon"
-                variant="ghost"
-                className="sm:hidden text-foreground hover:bg-secondary rounded-full"
-                aria-label="Write a new blog post"
-              >
-                <Link href="/blog/create">
-                  <BadgePlus className="size-6" />
-                </Link>
-              </Button>
-
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/" });
-                }}
-              >
-                <Button
-                  variant="ghost"
-                  type="submit"
-                  className="hidden sm:flex text-muted-foreground hover:text-destructive hover:bg-destructive/10 font-medium transition-colors"
-                >
-                  Logout
-                </Button>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="sm:hidden text-muted-foreground hover:text-destructive"
-                  aria-label="Log out"
-                >
-                  <LogOut className="size-5" />
-                </Button>
-              </form>
-
-              <Link href={`/user/${session?.id}`}>
-                <div className="size-10 overflow-hidden rounded-full border border-border hover:ring-2 hover:ring-primary/50 transition-all shadow-sm cursor-pointer relative bg-secondary flex items-center justify-center">
-                  {session?.user?.image ? (
-                    <Image
-                      src={session?.user?.image}
-                      alt={session?.user?.name || "User Avatar"}
-                      fill
-                      className="object-cover"
-                    />
-                  ) : (
-                    <span className="text-secondary-foreground font-bold">
-                      {session?.user?.name?.slice(0, 2).toUpperCase() || "CN"}
-                    </span>
-                  )}
-                </div>
-              </Link>
-            </>
-          ) : (
-            <form
-              action={async () => {
-                "use server";
-                await signIn("github");
-              }}
-            >
-              <Button
-                type="submit"
-                className="font-bold rounded-full bg-primary text-primary-foreground hover:bg-foreground hover:text-background px-6 h-10 shadow-sm transition-all"
-              >
-                Login
-              </Button>
-            </form>
-          )}
-        </div>
+        <Suspense fallback={<NavbarUserSkeleton />}>
+          <NavbarUser />
+        </Suspense>
       </nav>
     </header>
   );

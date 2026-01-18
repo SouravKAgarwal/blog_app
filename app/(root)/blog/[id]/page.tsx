@@ -39,7 +39,7 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `https://blogapp-09.vercel.app/blog/${id}`,
+      url: `${process.env.NEXT_PUBLIC_URL}/blog/${id}`,
       images: [
         {
           url: post.image,
@@ -97,6 +97,9 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
                     alt={post.author.name || "User Avatar"}
                     fill
                     className="object-cover"
+                    loading="eager"
+                    preload
+                    fetchPriority="high"
                   />
                 ) : (
                   <span className="text-secondary-foreground font-bold text-lg">
@@ -124,9 +127,11 @@ const DetailsPage = async ({ params }: { params: Promise<{ id: string }> }) => {
             alt={post.title}
             fill
             className="object-cover"
-            priority
             placeholder={blurDataURL ? "blur" : undefined}
             blurDataURL={blurDataURL}
+            loading="eager"
+            preload
+            fetchPriority="high"
           />
         </div>
       </section>

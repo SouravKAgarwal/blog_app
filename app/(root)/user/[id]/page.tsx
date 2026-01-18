@@ -46,7 +46,7 @@ export async function generateMetadata({
       title,
       description,
       type: "profile",
-      url: `https://blogapp-09.vercel.app/user/${id}`,
+      url: `${process.env.NEXT_PUBLIC_URL}/user/${id}`,
       images: [
         {
           url: user.image,
@@ -92,9 +92,11 @@ const UserPage = async ({
             width={140}
             height={140}
             className="relative rounded-full border-4 border-background shadow-xl"
-            priority
             placeholder={blurDataURL ? "blur" : undefined}
             blurDataURL={blurDataURL}
+            loading="eager"
+            preload
+            fetchPriority="high"
           />
         </div>
 

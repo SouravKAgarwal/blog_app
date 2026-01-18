@@ -109,7 +109,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
 
   return (
     <form action={formAction} className="blog-form">
-      <div>
+      <div className="space-y-2">
         <label
           htmlFor="title"
           className="font-serif text-xl font-bold text-foreground"
@@ -126,7 +126,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
         {errors.title && <p className="blog-form_error">{errors.title}</p>}
       </div>
 
-      <div>
+      <div className="space-y-2">
         <label
           htmlFor="description"
           className="font-serif text-xl font-bold text-foreground"
@@ -145,7 +145,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
         )}
       </div>
 
-      <div>
+      <div className="space-y-2">
         <label
           htmlFor="category"
           className="font-serif text-xl font-bold text-foreground"
@@ -210,7 +210,7 @@ const EditBlogForm = ({ post }: { post: BlogCardType }) => {
         {errors.link && <p className="blog-form_error">{errors.link}</p>}
       </div>
 
-      <div data-color-mode="light">
+      <div data-color-mode="light" className="space-y-2">
         <label
           htmlFor="Pitch"
           className="font-serif text-xl font-bold text-foreground"

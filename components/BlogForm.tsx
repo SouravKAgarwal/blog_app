@@ -108,7 +108,7 @@ const BlogForm = () => {
 
   return (
     <form action={formAction} className="blog-form">
-      <div>
+      <div className="space-y-2">
         <label
           htmlFor="title"
           className="font-serif text-xl font-bold text-foreground"
