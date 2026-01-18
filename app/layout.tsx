@@ -22,17 +22,6 @@ export const metadata: Metadata = {
     template: "%s | Blogify",
   },
   description: "A modern, sophisticated platform to share your thoughts.",
-  openGraph: {
-    images: [
-      {
-        url: "/opengraph.png",
-        width: 1200,
-        height: 630,
-        alt: "Blogify",
-      },
-    ],
-    siteName: "Blogify",
-  },
 };
 
 export default function RootLayout({
