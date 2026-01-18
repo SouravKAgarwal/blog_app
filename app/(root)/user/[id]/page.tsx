@@ -13,10 +13,10 @@ import { fetchUser } from "@/sanity/lib/fetch";
 async function BlogTitle({ id, user }: { id: string; user: { name: string } }) {
   const session = await auth();
   return (
-    <p className="font-serif text-2xl font-bold text-foreground">
+    <h2 className="font-serif text-2xl font-bold text-foreground">
       {session?.user?.id === id ? "Your" : `${user.name.split(" ")[0]}'s`}{" "}
       Stories
-    </p>
+    </h2>
   );
 }
 
@@ -98,9 +98,9 @@ const UserPage = async ({
         </div>
 
         <div className="space-y-2 z-10">
-          <h3 className="font-serif text-3xl font-bold text-foreground">
+          <h1 className="font-serif text-3xl font-bold text-foreground">
             {user.name}
-          </h3>
+          </h1>
           <p className="text-primary font-medium tracking-wide">
             @{user.username}
           </p>

@@ -10,9 +10,11 @@ import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 export const UserCards = ({
   post,
   isProfile = false,
+  index,
 }: {
   post: BlogCardType;
   isProfile?: boolean;
+  index?: number;
 }) => {
   const {
     _createdAt,
@@ -28,12 +30,10 @@ export const UserCards = ({
 
   return (
     <article className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all duration-300 hover:shadow-glow hover:border-primary/30 h-full">
-      {/* Image Section - Top */}
       <Link
         href={`/blog/${_id}`}
         className="block relative aspect-16/10 overflow-hidden w-full"
       >
-        {/* Gradient Overlay for Mood */}
         <div className="absolute inset-0 z-10 bg-linear-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
         <Image
@@ -44,11 +44,11 @@ export const UserCards = ({
           placeholder={blurDataURL ? "blur" : undefined}
           blurDataURL={blurDataURL}
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          priority={index !== undefined && index < 2}
         />
       </Link>
 
       <div className="flex flex-col flex-1 p-6 gap-4">
-        {/* Header */}
         <div className="flex justify-between items-center text-xs text-muted-foreground font-medium">
           <Link href={`/?query=${category?.toLowerCase()}`} className="z-20">
             <span className="bg-secondary px-2.5 py-1 rounded-full uppercase tracking-wider text-[10px] text-secondary-foreground hover:bg-primary hover:text-primary-foreground transition-colors duration-300 font-semibold">
@@ -58,7 +58,6 @@ export const UserCards = ({
           <span>{formatDate(_createdAt)}</span>
         </div>
 
-        {/* Content */}
         <div className="flex-1 space-y-3">
           <Link
             href={`/blog/${_id}`}
@@ -97,26 +96,30 @@ export const UserCards = ({
             </div>
 
             {isProfile && (
-              <Link href={`/blog/edit/${_id}`} className="z-20">
-                <Button
-                  size="icon"
-                  variant="secondary"
-                  className="size-8 rounded-full hover:bg-primary hover:text-primary-foreground transition-all"
-                >
+              <Button
+                asChild
+                size="icon"
+                variant="secondary"
+                className="size-8 rounded-full hover:bg-primary hover:text-primary-foreground transition-all"
+                aria-label="Edit blog post"
+              >
+                <Link href={`/blog/edit/${_id}`} className="z-20">
                   <Edit2Icon className="size-3.5" />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             )}
 
-            <Link href={`/blog/${_id}`} className="z-20">
-              <Button
-                size="icon"
-                variant="ghost"
-                className="size-8 -mr-2 text-muted-foreground hover:text-primary hover:bg-transparent"
-              >
+            <Button
+              asChild
+              size="icon"
+              variant="ghost"
+              className="size-8 -mr-2 text-muted-foreground hover:text-primary hover:bg-transparent"
+              aria-label="Read more"
+            >
+              <Link href={`/blog/${_id}`} className="z-20">
                 <ArrowRight className="size-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+              </Link>
+            </Button>
           </div>
         </div>
       </div>

@@ -115,14 +115,14 @@ async function SearchResults({
 
   return (
     <>
-      <p className="text-30-semibold">
+      <h2 className="text-30-semibold">
         {query ? `Search results for "${query}"` : "All Blogs"}
-      </p>
+      </h2>
       <ul className="mt-7 card_grid-sm">
         {posts?.length ? (
-          posts.map((post: BlogCardType) => (
+          posts.map((post: BlogCardType, index: number) => (
             <li key={post._id} className="list-none">
-              <UserCards post={post} />
+              <UserCards post={post} index={index} />
             </li>
           ))
         ) : (

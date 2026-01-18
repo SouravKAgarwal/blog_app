@@ -15,7 +15,7 @@ const Navbar = async () => {
           <div className="relative overflow-hidden rounded-full border border-primary/20 bg-secondary/50 p-1 group-hover:border-primary/50 transition-colors">
             <Image
               src="/logo.png"
-              alt="logo"
+              alt="Blogify Logo"
               width={28}
               height={28}
               className="object-contain group-hover:rotate-12 transition-transform duration-500"
@@ -29,22 +29,27 @@ const Navbar = async () => {
         <div className="flex items-center gap-1.5">
           {session && session?.user ? (
             <>
-              <Link href="/blog/create">
-                <Button
-                  variant="default"
-                  className="hidden sm:flex items-center gap-2 rounded-full font-bold bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-all shadow-sm px-5 h-10"
-                >
+              <Button
+                asChild
+                variant="default"
+                className="hidden sm:flex items-center gap-2 rounded-full font-bold bg-primary text-primary-foreground hover:bg-foreground hover:text-background transition-all shadow-sm px-5 h-10"
+              >
+                <Link href="/blog/create">
                   <Pen className="size-4" />
                   <span>Write</span>
-                </Button>
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="sm:hidden text-foreground hover:bg-secondary rounded-full"
-                >
+                </Link>
+              </Button>
+              <Button
+                asChild
+                size="icon"
+                variant="ghost"
+                className="sm:hidden text-foreground hover:bg-secondary rounded-full"
+                aria-label="Write a new blog post"
+              >
+                <Link href="/blog/create">
                   <BadgePlus className="size-6" />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
 
               <form
                 action={async () => {
@@ -63,6 +68,7 @@ const Navbar = async () => {
                   size="icon"
                   variant="ghost"
                   className="sm:hidden text-muted-foreground hover:text-destructive"
+                  aria-label="Log out"
                 >
                   <LogOut className="size-5" />
                 </Button>
