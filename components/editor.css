@@ -169,6 +169,7 @@ div.github-theme code {
   align-items: center !important;
   padding-left: 0 !important;
   margin: 0 !important;
+  background: transparent !important;
   gap: 12px !important;
 }
 
