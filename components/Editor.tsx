@@ -164,6 +164,7 @@ const Editor = ({
           "prettier",
           "pageFullscreen",
           "preview",
+          "previewOnly",
         ]}
         onUploadImg={onUploadImg}
       />

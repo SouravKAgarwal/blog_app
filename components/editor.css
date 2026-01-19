@@ -199,6 +199,8 @@ svg.md-editor-icon {
 .md-editor-toolbar-item {
   color: var(--color-muted-foreground) !important;
   transition: color 0.2s ease;
+  padding-inline: 8px !important;
+  margin-block: 3.5px !important;
 }
 
 .md-editor-toolbar-item:hover {
@@ -221,6 +223,7 @@ svg.md-editor-icon {
   padding: 10px !important;
   background-color: var(--color-muted) !important;
   border-radius: 8px;
+  justify-content: center !important;
 }
 
 .md-editor-toolbar-left {
